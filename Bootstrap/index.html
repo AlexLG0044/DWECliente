@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Luxury Motion</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <style>
+            :root {
+                --color-fondo: #0B0B0B;
+                --color-texto: #F5F5F5;
+                --color-secundario: #1F1F1F;
+                --color-dorado: #C8A951;
+                --color-plateado: #AFAFAF;
+            }
+    
+            [data-theme="light"] {
+                --color-fondo: #F5F5F5;
+                --color-texto: #0B0B0B;
+                --color-secundario: #FFFFFF;
+                --color-dorado: #BFA24B;
+                --color-plateado: #555555;
+            }
+    
+            body {
+                background-color: var(--color-fondo);
+                color: var(--color-texto);
+                transition: background-color 0.4s, color 0.4s;
+            }
+    
+            .navbar {
+                background-color: var(--color-secundario) !important;
+            }
+    
+            .navbar-brand,
+            .nav-link {
+                color: var(--color-dorado) !important;
+            }
+    
+            .nav-link.active {
+                color: var(--color-texto) !important;
+            }
+    
+            .btn-primary {
+                background-color: var(--color-dorado);
+                border: none;
+                color: var(--color-fondo);
+            }
+    
+            .btn-primary:hover {
+                background-color: #e0c977;
+                color: var(--color-fondo);
+            }
+    
+            .card {
+                background-color: var(--color-secundario);
+                border: 1px solid var(--color-dorado);
+                color: var(--color-texto);
+                transition: background-color 0.4s, color 0.4s;
+            }
+    
+            footer {
+                background-color: var(--color-secundario);
+                color: var(--color-plateado);
+                transition: background-color 0.4s, color 0.4s;
+              }
+        
+              footer a {
+                color: var(--color-dorado);
+              }
+        
+              footer a:hover {
+                color: #e0c977;
+              }
+              footer p.text-muted {
+                color: var(--color-plateado) !important;
+              }
+              
+              [data-theme="light"] footer p.text-muted {
+                color: #555 !important;
+              }
+            
+            .card-header {
+                background-color: var(--color-dorado) !important;
+                color: var(--color-fondo) !important;
+            }
+            .card-header i {
+                transition: transform 0.3s ease;
+            }
+    
+            .card-header:hover i {
+                transform: scale(1.15);
+                color: var(--color-dorado);
+            }
+
+            .btn-primary,
+            .btn-success,
+            .btn-warning {
+                background-color: var(--color-dorado) !important;
+                border: none !important;
+                color: var(--color-fondo) !important;
+            }
+
+            .btn-primary:hover,
+            .btn-success:hover,
+            .btn-warning:hover {
+                background-color: #e0c977 !important;
+                color: var(--color-fondo) !important;
+            }
+
+            .hero {
+                background-color: var(--color-secundario) !important;
+                color: var(--color-texto) !important;
+                border: 1px solid var(--color-dorado);
+                transition: background-color 0.4s, color 0.4s;
+            }
+
+            .hero .btn {
+                background-color: var(--color-dorado);
+                color: var(--color-fondo);
+                border: none;
+            }
+
+            .hero .btn:hover {
+                background-color: #e0c977;
+                color: var(--color-fondo);
+            }
+
+            .hero .btn-outline-light {
+                background-color: transparent !important;
+                color: var(--color-dorado) !important;
+                border: 1px solid var(--color-dorado) !important;
+            }
+
+            .hero .btn-outline-light:hover {
+                background-color: var(--color-dorado) !important;
+                color: var(--color-fondo) !important;
+            }
+
+            .navbar, .card, .hero, footer {
+                transition: background-color 0.4s, color 0.4s, border-color 0.4s;
+            }
+
+            [data-theme="dark"] .navbar {
+                background-color: var(--color-secundario) !important;
+            }
+            
+            [data-theme="light"] .navbar {
+                background-color: var(--color-secundario) !important;
+            }
+            
+            [data-theme="dark"] .navbar .nav-link,
+            [data-theme="dark"] .navbar .navbar-brand {
+                color: var(--color-dorado) !important;
+            }
+            
+            [data-theme="light"] .navbar .nav-link,
+            [data-theme="light"] .navbar .navbar-brand {
+                color: var(--color-texto) !important;
+            }
+            
+            [data-theme="light"] .btn-outline-light {
+                border-color: var(--color-texto);
+                color: var(--color-texto);
+            }
+            
+            [data-theme="light"] .btn-outline-light:hover {
+                background-color: var(--color-texto);
+                color: var(--color-fondo);
+            }
+        </style>
+    </head>
+<body>
+
+    <!-- Navbar 
+    Crea una barra fija con el logo y enlaces a Inicio, Servicios y Contacto.
+    Incluye botón para cambiar tema y botón para abrir el modal de login.
+    Usa clases de Bootstrap para el diseño responsive. 
+    -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold d-flex align-items-center" href="index.html"><img src="img/logo.png" alt="" height="40" class="me-2">Luxury Motion</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="productos.html">Servicios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="quienesSomos.html">Contacto</a></li>
+                </ul>
+                <button id="themeToggle" class="btn btn-outline-light me-2">
+                    <i class="fas fa-moon"></i> Modo Oscuro
+                </button>
+                <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar 
+            Barra lateral con enlaces a secciones internas (Análisis, Clientes, Configuración).
+            Se oculta en pantallas pequeñas. 
+            -->
+            <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" style="margin-top: 56px;">
+                <div class="position-sticky pt-3">
+                    <h6 class="sidebar-heading text-muted px-3 mt-4 mb-1">Navegación</h6>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fas fa-chart-bar me-2"></i>Análisis</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fas fa-users me-2"></i>Clientes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fas fa-cog me-2"></i>Configuración</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" style="margin-top: 56px;">
+                <!-- Hero Section 
+                Presenta el mensaje principal y botones de acción.
+                Colores personalizados y diseño centrado. 
+                -->
+                <section id="inicio" class="hero bg-primary text-white py-5 mb-5 rounded">
+                    <div class="container text-center">
+                        <h1 class="display-4 fw-bold">Bienvenido a Luxury Motion</h1>
+                        <p class="lead">Alquiler/Venta de Vehículos de Lujo</p>
+                        <button class="btn btn-light btn-lg me-2">Comenzar</button>
+                        <button class="btn btn-outline-light btn-lg">Saber más</button>
+                    </div>
+                </section>
+            
+                <!-- Cards Section 
+                Tres tarjetas con íconos grandes (fa-car-side, fa-flag-checkered, fa-key).
+                Cada una describe un servicio y tiene un botón “Ver más”. 
+                -->
+                <section id="servicios" class="mb-5">
+                    <h2 class="mb-4">Nuestros Servicios</h2>
+                    <div class="row">
+                        <div class="col-lg-4 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-header bg-primary text-white text-center">
+                                    <i class="fas fa-car-side fa-3x mb-2"></i>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Alquiler</h5>
+                                    <p class="card-text">
+                                        Disfruta del lujo sobre ruedas con nuestra exclusiva flota de vehículos de alta gama. 
+                                        En <strong>Luxury Motion</strong> te ofrecemos coches deportivos, SUV de élite y sedanes premium para cualquier ocasión. 
+                                        Elige tu modelo favorito y vive una experiencia de conducción incomparable, con servicio personalizado y atención 24/7.
+                                    </p>
+                                    <div class="d-grid">
+                                        <button class="btn btn-primary">Ver más</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-header bg-success text-white text-center">
+                                    <i class="fas fa-flag-checkered fa-3x mb-2"></i>
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">Pruebas en Circuito</h5>
+                                    <p class="card-text flex-grow-1">
+                                        Siente la adrenalina en su máxima expresión con nuestras <strong>pruebas en circuito privado</strong>. 
+                                        Conduce marcas icónicas como Ferrari, Lamborghini o Porsche en entornos controlados y seguros. 
+                                        Ideal para eventos, regalos o simplemente para cumplir el sueño de acelerar un coche de lujo sin límites.
+                                        <br>
+                                    </p>
+                                    <div class="mt-auto d-grid">
+                                        <button class="btn btn-success">Ver más</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-header bg-warning text-dark text-center">
+                                    <i class="fas fa-key fa-3x mb-2"></i>
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">Vehículos en Venta</h5>
+                                    <p class="card-text flex-grow-1">
+                                        Accede a nuestra selección de <strong>vehículos de lujo certificados</strong>, cuidadosamente revisados y garantizados. 
+                                        En <strong>Luxury Motion</strong> te ayudamos a encontrar el coche de tus sueños, con opciones exclusivas de financiación y asesoramiento experto para tu próxima adquisición.
+                                    </p>
+                                    <div class="mt-auto d-grid">
+                                        <button class="btn btn-warning">Ver más</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+    <!-- Modal 
+    Ventana emergente con formulario básico de inicio de sesión.
+    Usa componentes de Bootstrap (modal-dialog, modal-content). 
+    -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Iniciar Sesión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" placeholder="tu@email.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Contraseña</label>
+                            <input type="password" class="form-control">
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="remember">
+                            <label class="form-check-label" for="remember">Recordarme</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Entrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer 
+    Contiene logo, descripción, enlaces y redes sociales.
+    Colores coherentes con el modo oscuro. 
+    -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="d-flex align-items-center"><img src="img/logo.png" alt="" height="40" class="me-2">Luxury Motion</h5>
+                    <p class="text-muted">Alquiler/Venta de Vehículos de Lujo</p>
+                </div>
+                <div class="col-md-3">
+                    <h6>Enlaces</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-light text-decoration-none">Inicio</a></li>
+                        <li><a href="productos.html" class="text-light text-decoration-none">Servicios</a></li>
+                        <li><a href="quienesSomos.html" class="text-light text-decoration-none">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6>Síguenos</h6>
+                    <a href="https://www.facebook.com/?locale=es_ES%2F" class="text-light me-2"><i class="fab fa-facebook fa-lg"></i></a>
+                    <a href="https://x.com/" class="text-light me-2"><i class="fab fa-twitter fa-lg"></i></a>
+                    <a href="https://es.linkedin.com/" class="text-light me-2"><i class="fab fa-linkedin fa-lg"></i></a>
+                </div>
+            </div>
+            <hr class="my-3">
+            <div class="text-center">
+                <small>&copy; 2025 Luxury Motion. Todos los derechos reservados.</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        let isDark = true;
+
+        themeToggle.addEventListener('click', () => {
+            isDark = !isDark;
+            body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+            themeToggle.innerHTML = isDark
+                ? '<i class="fas fa-moon"></i> Modo Oscuro'
+                : '<i class="fas fa-sun"></i> Modo Claro';
+        });
+    </script>
+</body>
+</html>

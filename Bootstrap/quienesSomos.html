@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Contacto - Luxury Motion</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+        <style>
+            :root {
+              --color-fondo: #0b0b0b;
+              --color-texto: #f5f5f5;
+              --color-secundario: #1f1f1f;
+              --color-dorado: #c8a951;
+              --color-plateado: #afafaf;
+            }
+      
+            [data-theme="light"] {
+              --color-fondo: #f5f5f5;
+              --color-texto: #0b0b0b;
+              --color-secundario: #ffffff;
+              --color-dorado: #bfa24b;
+              --color-plateado: #555555;
+            }
+      
+            body {
+              background-color: var(--color-fondo);
+              color: var(--color-texto);
+              transition: background-color 0.4s, color 0.4s;
+            }
+      
+            .navbar {
+              background-color: var(--color-secundario) !important;
+              transition: background-color 0.4s, color 0.4s;
+            }
+      
+            .navbar-brand,
+            .nav-link {
+              color: var(--color-dorado) !important;
+            }
+      
+            .nav-link.active {
+              color: var(--color-texto) !important;
+            }
+      
+            [data-theme="light"] .navbar .nav-link,
+            [data-theme="light"] .navbar .navbar-brand {
+              color: var(--color-texto) !important;
+            }
+      
+            .btn-primary,
+            .btn-success,
+            .btn-warning {
+              background-color: var(--color-dorado) !important;
+              border: none !important;
+              color: var(--color-fondo) !important;
+            }
+      
+            .btn-primary:hover,
+            .btn-success:hover,
+            .btn-warning:hover {
+              background-color: #e0c977 !important;
+              color: var(--color-fondo) !important;
+            }
+      
+            .btn-outline-light {
+              border-color: var(--color-dorado) !important;
+              color: var(--color-dorado) !important;
+            }
+      
+            .btn-outline-light:hover {
+              background-color: var(--color-dorado) !important;
+              color: var(--color-fondo) !important;
+            }
+      
+            .hero {
+              background-color: var(--color-secundario) !important;
+              color: var(--color-texto) !important;
+              border: 1px solid var(--color-dorado);
+              transition: background-color 0.4s, color 0.4s;
+            }
+      
+            .hero .btn {
+              background-color: var(--color-dorado);
+              color: var(--color-fondo);
+              border: none;
+            }
+      
+            .hero .btn:hover {
+              background-color: #e0c977;
+              color: var(--color-fondo);
+            }
+      
+            .card {
+              background-color: var(--color-secundario);
+              border: 1px solid var(--color-dorado);
+              color: var(--color-texto);
+              transition: background-color 0.4s, color 0.4s;
+            }
+      
+            .card-header {
+              background-color: var(--color-dorado) !important;
+              color: var(--color-fondo) !important;
+            }
+      
+            .card-text.text-muted {
+              color: var(--color-plateado) !important;
+            }
+      
+            footer {
+              background-color: var(--color-secundario);
+              color: var(--color-plateado);
+              transition: background-color 0.4s, color 0.4s;
+            }
+      
+            footer a {
+              color: var(--color-dorado);
+            }
+      
+            footer a:hover {
+              color: #e0c977;
+            }
+      
+            .badge {
+              background-color: var(--color-dorado) !important;
+              color: var(--color-fondo) !important;
+              border: 1px solid var(--color-dorado);
+              transition: background-color 0.4s, color 0.4s;
+            }
+      
+            [data-theme="light"] .badge {
+              background-color: var(--color-plateado) !important;
+              color: var(--color-fondo) !important;
+            }
+      
+            .navbar,
+            .card,
+            .hero,
+            footer {
+              transition: background-color 0.4s, color 0.4s, border-color 0.4s;
+            }
+
+            .form-control,
+            .form-select,
+            textarea {
+            background-color: var(--color-secundario) !important;
+            color: var(--color-texto) !important;
+            border: 1px solid var(--color-dorado) !important;
+            transition: background-color 0.4s, color 0.4s, border-color 0.4s;
+            }
+
+            .form-control::placeholder,
+            textarea::placeholder {
+            color: var(--color-plateado) !important;
+            opacity: 0.8;
+            }
+
+            .form-label,
+            .form-floating label,
+            .form-check-label {
+            color: var(--color-texto) !important;
+            }
+
+            .form-check-input {
+            background-color: var(--color-secundario);
+            border-color: var(--color-dorado);
+            }
+
+            .form-check-input:checked {
+            background-color: var(--color-dorado);
+            border-color: var(--color-dorado);
+            }
+
+            [data-theme="light"] .form-control,
+            [data-theme="light"] .form-select,
+            [data-theme="light"] textarea {
+            background-color: #ffffff !important;
+            color: #0b0b0b !important;
+            border: 1px solid var(--color-dorado) !important;
+            }
+
+            [data-theme="light"] .form-control::placeholder,
+            [data-theme="light"] textarea::placeholder {
+            color: #555 !important;
+            }
+
+            [data-theme="light"] .form-label,
+            [data-theme="light"] .form-floating label,
+            [data-theme="light"] .form-check-label {
+            color: #000 !important;
+            }
+
+            .card i[class*="fa-"] {
+                color: var(--color-dorado) !important;
+                transition: color 0.4s;
+            }
+            
+            .card h5, 
+            .card h6, 
+            .card p, 
+            .card small {
+                color: var(--color-texto) !important;
+            }
+            
+            .card hr {
+                border-color: var(--color-dorado) !important;
+            }
+            
+            .text-muted,
+            .small,
+            .text-secondary {
+                color: var(--color-plateado) !important;
+            }
+            
+            [data-theme="light"] .text-muted,
+            [data-theme="light"] .small,
+            [data-theme="light"] .text-secondary {
+                color: #555 !important;
+            }
+
+            .contact-info-card .rounded-circle {
+                background-color: var(--color-dorado) !important;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                transition: transform 0.3s ease, background-color 0.3s ease;
+            }
+            
+            .contact-info-card .rounded-circle i {
+                color: #000 !important;
+            }
+            
+            .contact-info-card .rounded-circle:hover {
+                transform: scale(1.1);
+                filter: brightness(1.1);
+            }
+            
+            .contact-info-card h5,
+            .contact-info-card p {
+                color: var(--color-texto) !important;
+            }
+            
+            .contact-info-card {
+                background-color: var(--color-secundario) !important;
+                border: 1px solid var(--color-dorado) !important;
+                color: var(--color-texto) !important;
+                transition: background-color 0.4s, color 0.4s;
+            }
+            
+            [data-theme="light"] .contact-info-card .rounded-circle {
+                background-color: var(--color-dorado) !important;
+            }
+            
+            [data-theme="light"] .contact-info-card .rounded-circle i {
+                color: #000 !important;
+            }
+          </style>
+    </head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold d-flex align-items-center" href="index.html"><img src="img/logo.png" alt="" height="40" class="me-2">Luxury Motion</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="productos.html">Servicios</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="quienesSomos.html">Contacto</a></li>
+                </ul>
+                <button id="themeToggle" class="btn btn-outline-light me-2">
+                    <i class="fas fa-moon"></i> Modo Oscuro
+                </button>
+                <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#quickContactModal">
+                    <i class="fas fa-phone me-2"></i>Llamar Ahora
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section for Contact 
+    Presenta el propósito de la página con badges informativos. 
+    -->
+    <section class="hero py-5" style="margin-top: 56px;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold">Contáctanos</h1>
+                    <p class="lead">Estamos aquí para asesorarte en la elección del vehículo perfecto.
+                        Ya sea para una compra exclusiva o un alquiler temporal, nuestro equipo te ayudará a encontrar la mejor opción para tu estilo de vida.</p>
+                    <div class="d-flex flex-wrap gap-2 mt-4">
+                        <span class="badge bg-light text-dark px-3 py-2"><i class="fas fa-clock me-1"></i>Respuesta en
+                            24h</span>
+                        <span class="badge bg-light text-dark px-3 py-2"><i class="fas fa-headset me-1"></i>Soporte
+                            24/7</span>
+                        <span class="badge bg-light text-dark px-3 py-2"><i class="fas fa-shield-alt me-1"></i>Consulta
+                            Gratuita</span>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <i class="fas fa-envelope fa-10x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container my-5">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Contacto</li>
+            </ol>
+        </nav>
+
+        <!-- Contact Information Cards 
+        Muestran dirección, teléfono, correo y horarios con íconos circulares dorados 
+        -->
+        <section class="mb-5">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card contact-info-card border-0 shadow h-100 text-center">
+                        <div class="card-body py-4">
+                            <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                                style="width: 60px; height: 60px;">
+                                <i class="fas fa-map-marker-alt fa-lg"></i>
+                            </div>
+                            <h5 class="card-title">Dirección</h5>
+                            <p class="card-text text-muted">
+                                Centro Luxury Motion<br>
+                                Ctra. Badajoz , s/n<br>
+                                18014 Granada, España
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card contact-info-card border-0 shadow h-100 text-center">
+                        <div class="card-body py-4">
+                            <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                                style="width: 60px; height: 60px;">
+                                <i class="fas fa-phone fa-lg"></i>
+                            </div>
+                            <h5 class="card-title">Teléfono</h5>
+                            <p class="card-text text-muted">
+                                <strong>+34 958 52 12 34</strong><br>
+                                <small>Lun - Sab: 8:00 - 20:00</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card contact-info-card border-0 shadow h-100 text-center">
+                        <div class="card-body py-4">
+                            <div class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                                style="width: 60px; height: 60px;">
+                                <i class="fas fa-envelope fa-lg"></i>
+                            </div>
+                            <h5 class="card-title">Email</h5>
+                            <p class="card-text text-muted">
+                                <strong>Luxury@motion.es</strong><br>
+                                <small>Respuesta en 24h</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card contact-info-card border-0 shadow h-100 text-center">
+                        <div class="card-body py-4">
+                            <div class="bg-warning text-dark rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                                style="width: 60px; height: 60px;">
+                                <i class="fas fa-clock fa-lg"></i>
+                            </div>
+                            <h5 class="card-title">Horario</h5>
+                            <p class="card-text text-muted">
+                                <strong>Lun - Sab:</strong> 8:00 - 20:00<br>
+                                <strong>Sáb:</strong> 9:00 - 14:00
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Form and Map Section -->
+        <section class="mb-5">
+            <div class="row align-items-stretch">
+                <!-- Contact Form 
+                Incluye validaciones visuales y campos obligatorios.
+                Usa form-floating de Bootstrap para etiquetas flotantes. 
+                -->
+                <div class="col-lg-6 mb-4 d-flex">
+                    <div class="card border-0 shadow-lg w-100">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0"><i class="fas fa-paper-plane me-2"></i>Envíanos un Mensaje</h4>
+                        </div>
+                        <div class="card-body p-4">
+                            <form id="contactForm" novalidate>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="firstName" placeholder="Nombre"
+                                                required>
+                                            <label for="firstName">Nombre *</label>
+                                            <div class="invalid-feedback">
+                                                Por favor, introduce tu nombre.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="lastName"
+                                                placeholder="Apellidos" required>
+                                            <label for="lastName">Apellidos *</label>
+                                            <div class="invalid-feedback">
+                                                Por favor, introduce tus apellidos.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="email" class="form-control" id="email" placeholder="Email"
+                                                required>
+                                            <label for="email">Email *</label>
+                                            <div class="invalid-feedback">
+                                                Por favor, introduce un email válido.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="tel" class="form-control" id="phone" placeholder="Teléfono">
+                                            <label for="phone">Teléfono</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="service" class="form-label">Servicio de Interés</label>
+                                    <select class="form-select" id="service" required>
+                                        <option value="">Selecciona un servicio</option>
+                                        <option value="web">Desarrollo Web</option>
+                                        <option value="mobile">Aplicaciones Móviles</option>
+                                        <option value="cloud">Cloud Computing</option>
+                                        <option value="security">Ciberseguridad</option>
+                                        <option value="ai">IA & Machine Learning</option>
+                                        <option value="consulting">Consultoría IT</option>
+                                        <option value="other">Otro</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Por favor, selecciona un servicio.
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Presupuesto Estimado</label>
+                                    <div class="row">
+                                        <div class="col-6 col-sm-3 mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="budget" id="budget1"
+                                                    value="<5k">
+                                                <label class="form-check-label" for="budget1">
+                                                    < €5K </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-3 mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="budget" id="budget2"
+                                                    value="5k-15k">
+                                                <label class="form-check-label" for="budget2">
+                                                    €5K - €15K
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-3 mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="budget" id="budget3"
+                                                    value="15k-50k">
+                                                <label class="form-check-label" for="budget3">
+                                                    €15K - €50K
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-3 mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="budget" id="budget4"
+                                                    value=">50k">
+                                                <label class="form-check-label" for="budget4">
+                                                    > €50K
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="form-floating">
+                                        <textarea class="form-control" id="message" placeholder="Mensaje"
+                                            style="height: 120px" required></textarea>
+                                        <label for="message">Cuéntanos qué tipo de vehículo buscas o qué experiencia deseas vivir.
+                                            </label>
+                                        <div class="invalid-feedback">
+                                            Por favor, describe tu consulta.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="newsletter">
+                                        <label class="form-check-label" for="newsletter">
+                                            Quiero recibir noticias y ofertas especiales por email
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="privacy" required>
+                                        <label class="form-check-label" for="privacy">
+                                            He leído y acepto la <a href="#" class="text-primary">política de
+                                                privacidad</a> y los <a href="#" class="text-primary">términos de
+                                                servicio</a> *
+                                        </label>
+                                        <div class="invalid-feedback">
+                                            Debes aceptar la política de privacidad.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-paper-plane me-2"></i>Enviar Mensaje
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        
+        <!-- CAROUSEL 
+        Muestra fotos y descripciones de instructores destacados.
+        Transiciones automáticas con botones de navegación. 
+        -->
+                <div class="col-lg-6 mb-4 d-flex">
+                    <div id="carouselExampleCaptions" class="carousel slide h-100 w-100" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        </div>
+                        <div class="carousel-inner h-100">
+                        <div class="carousel-item active h-100">
+                            <img src="img/alonso.png" class="d-block w-100 h-100" style="object-fit: cover;" alt="...">
+                            <div class="carousel-caption d-none d-md-block">
+                            <h5>Primer Instructor</h5>
+                            <p>Doble campeón mundial de Fórmula 1 con más de 20 años en la élite.
+                                En Luxury Motion comparte su experiencia sobre precisión, control y excelencia al volante.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item h-100">
+                            <img src="img/llados.png" class="d-block w-100 h-100" style="object-fit: cover;" alt="...">
+                            <div class="carousel-caption d-none d-md-block">
+                            <h5>Segundo Instructor</h5>
+                            <p>Emprendedor, coach de alto rendimiento y apasionado por la velocidad.
+                                Inspira a nuestros clientes a superar límites dentro y fuera del circuito.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item h-100">
+                            <img src="img/brian.png" class="d-block w-100 h-100" style="object-fit: cover;" alt="...">
+                            <div class="carousel-caption d-none d-md-block">
+                            <h5>Tercer Instructor</h5>
+                            <p>Piloto profesional y experto en conducción extrema.
+                                Su filosofía: dominar la potencia con estilo y responsabilidad.</p>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </section>         
+        <!-- FAQ Section 
+        Sección interactiva de preguntas y respuestas.
+        Controlada con el componente accordion de Bootstrap. 
+        -->
+        <section class="mb-5">
+            <h2 class="text-center mb-5">Preguntas Frecuentes sobre Contacto</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="accordion" id="contactFaqAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq1">
+                                    ¿En cuánto tiempo responden a las consultas?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse show"
+                                data-bs-parent="#contactFaqAccordion">
+                                <div class="accordion-body">
+                                    Respondemos en un máximo de 24 horas. Si necesitas atención inmediata, llámanos directamente y te atenderá un asesor especializado.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq2">
+                                    ¿Puedo probar un vehículo antes de comprarlo?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#contactFaqAccordion">
+                                <div class="accordion-body">
+                                    Sí. Ofrecemos pruebas personalizadas bajo cita previa para garantizar una experiencia segura y exclusiva.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq3">
+                                    ¿Puedo alquilar un coche para eventos especiales?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#contactFaqAccordion">
+                                <div class="accordion-body">
+                                    Por supuesto. Disponemos de vehículos para bodas, rodajes, ferias y ocasiones corporativas.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq4">
+                                    ¿Ofrecen entrega a domicilio?
+                                </button>
+                            </h2>
+                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#contactFaqAccordion">
+                                <div class="accordion-body">
+                                    Sí. Entregamos y recogemos tu vehículo en cualquier punto de España bajo solicitud previa.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Office Hours and Additional Info -->
+        <section class="mb-5">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-clock fa-3x text-primary mb-3"></i>
+                            <h5>Horarios de Atención</h5>
+                            <hr>
+                            <p class="mb-1"><strong>Lunes - Viernes:</strong></p>
+                            <p class="text-muted">8:00 - 20:00</p>
+                            <p class="mb-1"><strong>Sábados:</strong></p>
+                            <p class="text-muted">9:00 - 14:00</p>
+                            <p class="mb-1"><strong>Domingos:</strong></p>
+                            <p class="text-muted">Cerrado, salvo citas VIP.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-headset fa-3x text-success mb-3"></i>
+                            <h5>Soporte Técnico</h5>
+                            <hr>
+                            <p class="mb-1"><strong>Teléfono de Urgencias:</strong></p>
+                            <p class="text-muted">+34 958 52 12 35</p>
+                            <p class="mb-1"><strong>Email Soporte:</strong></p>
+                            <p class="text-muted">soporte@luxurym.es</p>
+                            <p class="mb-1"><strong>Disponibilidad:</strong></p>
+                            <p class="text-muted">24/7</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-building fa-3x text-warning mb-3"></i>
+                            <h5>Otras Oficinas</h5>
+                            <hr>
+                            <p class="mb-1"><strong>Luxury Motion PB:</strong></p>
+                            <p class="text-muted small">Calle Compositor Lehmberg Ruiz, 18</p>
+                            <p class="mb-1"><strong>Luxury Motion MD:</strong></p>
+                            <p class="text-muted small">Calle Luis Montoto, 89</p>
+                            <p class="mb-1"><strong>Luxury Motion BCN:</strong></p>
+                            <p class="text-muted small">Avenida del Brillante, 2</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- Success Toast -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="successToast" class="toast" role="alert">
+            <div class="toast-header bg-success text-white">
+                <i class="fas fa-check-circle me-2"></i>
+                <strong class="me-auto">¡Mensaje Enviado!</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body">
+                Gracias por contactarnos. Te responderemos pronto.
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="d-flex align-items-center"><img src="img/logo.png" alt="" height="40" class="me-2">Luxury Motion</h5>
+                    <p class="text-muted">Alquiler/Venta de Vehículos de Lujo</p>
+                    <p class="small">
+                        <i class="fas fa-map-marker-alt me-2"></i>Luxury Motion - 18014 Granada<br>
+                        <i class="fas fa-phone me-2"></i>+34 958 52 12 34<br>
+                        <i class="fas fa-envelope me-2"></i>luxury@motion.es
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <h6>Enlaces</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-light text-decoration-none">Inicio</a></li>
+                        <li><a href="productos.html" class="text-light text-decoration-none">Servicios</a></li>
+                        <li><a href="quienesSomos.html" class="text-light text-decoration-none">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6>Síguenos</h6>
+                    <a href="https://www.facebook.com/?locale=es_ES%2F" class="text-light me-2"><i class="fab fa-facebook fa-lg"></i></a>
+                    <a href="https://x.com/" class="text-light me-2"><i class="fab fa-twitter fa-lg"></i></a>
+                    <a href="https://es.linkedin.com/" class="text-light me-2"><i class="fab fa-linkedin fa-lg"></i></a>
+                    <a href="https://www.instagram.com/" class="text-light me-2"><i class="fab fa-instagram fa-lg"></i></a>
+                </div>
+            </div>
+            <hr class="my-3">
+            <div class="text-center">
+                <small>&copy; 2025 Luxury Motion. Todos los derechos reservados.</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Form validation
+        (function () {
+            'use strict';
+
+            const form = document.getElementById('contactForm');
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                if (form.checkValidity()) {
+                    // Simulate form submission
+                    setTimeout(function () {
+                        form.reset();
+                        form.classList.remove('was-validated');
+
+                        // Show success toast
+                        const toast = new bootstrap.Toast(document.getElementById('successToast'));
+                        toast.show();
+                    }, 1000);
+                }
+
+                form.classList.add('was-validated');
+            });
+        })();
+
+        // Add some interactive effects
+        document.querySelectorAll('.contact-info-card').forEach(card => {
+            card.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-5px)';
+            });
+
+            card.addEventListener('mouseleave', function () {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+
+    <script>
+        const themeToggle = document.getElementById("themeToggle");
+        const root = document.documentElement;
+      
+        // Aplicar tema guardado o por defecto (oscuro)
+        const savedTheme = localStorage.getItem("theme");
+        const currentTheme = savedTheme ? savedTheme : "dark";
+        root.setAttribute("data-theme", currentTheme);
+        themeToggle.textContent = currentTheme === "light" ? "Modo oscuro" : "Modo claro";
+      
+        // Cambiar tema al pulsar el botón
+        themeToggle.addEventListener("click", () => {
+          const isLight = root.getAttribute("data-theme") === "light";
+          const newTheme = isLight ? "dark" : "light";
+          root.setAttribute("data-theme", newTheme);
+          localStorage.setItem("theme", newTheme);
+          themeToggle.textContent = newTheme === "light" ? "Modo oscuro" : "Modo claro";
+        });
+      </script>
+</body>
+</html>

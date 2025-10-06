@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Productos - Luxury Motion</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+        <style>
+            :root {
+                --color-fondo: #0B0B0B;
+                --color-texto: #F5F5F5;
+                --color-secundario: #1F1F1F;
+                --color-dorado: #C8A951;
+                --color-plateado: #AFAFAF;
+            }
+        
+            [data-theme="light"] {
+                --color-fondo: #F5F5F5;
+                --color-texto: #0B0B0B;
+                --color-secundario: #FFFFFF;
+                --color-dorado: #BFA24B;
+                --color-plateado: #555555;
+            }
+        
+            body {
+                background-color: var(--color-fondo);
+                color: var(--color-texto);
+                transition: background-color 0.4s, color 0.4s;
+            }
+        
+            .btn,
+            .btn-primary,
+            .btn-success,
+            .btn-warning,
+            .btn-info,
+            .btn-dark,
+            .btn-danger,
+            .btn-outline-primary {
+                background-color: var(--color-dorado) !important;
+                border: none !important;
+                color: var(--color-fondo) !important;
+                transition: background-color 0.3s ease, color 0.3s ease;
+            }
+        
+            .btn:hover,
+            .btn-primary:hover,
+            .btn-success:hover,
+            .btn-warning:hover,
+            .btn-info:hover,
+            .btn-dark:hover,
+            .btn-danger:hover {
+                background-color: #e0c977 !important;
+                color: var(--color-fondo) !important;
+            }
+        
+            .btn-outline-light,
+            .btn-outline-primary {
+                background-color: transparent !important;
+                border: 1px solid var(--color-dorado) !important;
+                color: var(--color-dorado) !important;
+            }
+        
+            .btn-outline-light:hover,
+            .btn-outline-primary:hover {
+                background-color: var(--color-dorado) !important;
+                color: var(--color-fondo) !important;
+            }
+        
+            .hero {
+                background-color: var(--color-secundario) !important;
+                color: var(--color-texto) !important;
+                border: 1px solid var(--color-dorado);
+            }
+        
+            /* ✨ Cards */
+            .card {
+                background-color: var(--color-secundario);
+                border: 1px solid var(--color-dorado);
+                color: var(--color-texto);
+                transition: background-color 0.4s, color 0.4s;
+            }
+        
+            .card-header {
+                background-color: var(--color-dorado) !important;
+                color: var(--color-fondo) !important;
+                border-bottom: 1px solid var(--color-dorado);
+            }
+        
+            .navbar, footer {
+                background-color: var(--color-secundario) !important;
+                color: var(--color-plateado) !important;
+            }
+        
+            .navbar-brand, .nav-link, footer a {
+                color: var(--color-dorado) !important;
+            }
+        
+            footer a:hover {
+                color: #e0c977 !important;
+            }
+        
+            .timeline-step h5, 
+            .timeline-step p {
+                color: var(--color-texto) !important;
+            }
+        
+            .timeline-step .rounded-circle {
+                background-color: var(--color-dorado) !important;
+                color: var(--color-fondo) !important;
+            }
+        
+            .call-to-action {
+                background-color: var(--color-secundario) !important;
+                border: 1px solid var(--color-dorado);
+                color: var(--color-texto) !important;
+            }
+        
+            .navbar, .card, .hero, footer, .call-to-action {
+                transition: background-color 0.4s, color 0.4s, border-color 0.4s;
+            }
+
+            .modal-content {
+                background-color: var(--color-secundario) !important;
+                color: var(--color-texto) !important;
+                border: 1px solid var(--color-dorado) !important;
+            }
+
+            .modal-header, .modal-footer {
+                background-color: var(--color-secundario) !important;
+                border-color: var(--color-dorado) !important;
+            }
+
+            .modal-title i {
+                color: var(--color-dorado) !important;
+            }
+
+            .modal-body {
+                background-color: var(--color-secundario) !important;
+                color: var(--color-texto) !important;
+            }
+
+            .modal .btn-close {
+                filter: invert(1) brightness(1.5);
+            }
+
+            .btn-theme-toggle {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                z-index: 1050;
+                background-color: var(--color-dorado) !important;
+                border: none !important;
+                color: var(--color-fondo) !important;
+                border-radius: 50%;
+                width: 48px;
+                height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+                transition: all 0.3s ease;
+            }
+            
+            .btn-theme-toggle:hover {
+                background-color: #e0c977 !important;
+                transform: scale(1.08);
+            }
+            
+            .btn-theme-toggle i {
+                font-size: 1.3rem;
+                transition: transform 0.4s ease;
+            }
+            
+            .btn-theme-toggle:hover i {
+                transform: rotate(25deg);
+            }
+
+            [data-theme="light"] {
+                .text-white { color: #000 !important; }
+                .text-muted { color: #555 !important; }
+                .text-dark { color: #000 !important; }
+                .card-header.text-white { color: #000 !important; }
+                footer.text-light, footer a.text-light { color: #000 !important; }
+            }
+            
+            [data-theme="dark"] {
+                .text-white { color: #fff !important; }
+                .text-muted { color: #ccc !important; }
+                .text-dark { color: #fff !important; }
+            }
+            .badge {
+                background-color: var(--color-dorado) !important;
+                color: var(--color-fondo) !important;
+                border: 1px solid var(--color-dorado);
+                transition: background-color 0.4s, color 0.4s;
+            }
+            
+            [data-theme="light"] .badge {
+                background-color: var(--color-plateado) !important;
+                color: var(--color-fondo) !important;
+            }
+            
+            [data-theme="dark"] .badge {
+                background-color: var(--color-dorado) !important;
+                color: var(--color-fondo) !important;
+            }
+            
+            .text-dorado {
+                color: var(--color-dorado) !important;
+              }
+              .card-img-top {
+                height: 220px;
+                object-fit: cover;
+                border-bottom: 1px solid var(--color-dorado);
+              }
+              .card:hover {
+                transform: translateY(-5px);
+                transition: all 0.3s ease;
+              }
+
+        </style>
+    </head>
+<body>
+    
+    <!-- Hero Section for Services
+    Presenta la sección con título “Nuestros Servicios” y badges informativos.
+    Usa un icono grande (fa-car)
+    -->
+    <section class=" hero py-5" style="margin-top: 56px;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold">Nuestros Servicios</h1>
+                    <p class="lead">
+                        Experiencias exclusivas en movilidad: venta, alquiler y pruebas de vehículos de lujo diseñados para quienes exigen lo mejor.
+                      </p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <span class="badge text-dark px-3 py-2">+100 Vehículos Disponibles</span>
+                        <span class="badge text-dark px-3 py-2">5 Años de Experiencia</span>
+                        <span class="badge text-dark px-3 py-2">24/7 Soporte</span>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <i class="fas fa-car fa-10x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container my-5">
+        <!-- Breadcrumb Navigation 
+        Muestra navegación jerárquica: Inicio > Servicios. 
+        -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Servicios</li>
+            </ol>
+        </nav>
+
+        <!-- Services Overview Cards 
+        Tres cards detalladas: Alquiler, Pruebas en Circuito, Vehículos en Venta.
+        Cada botón abre un modal con información ampliada. 
+        -->
+        <section class="mb-5">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 border-0 shadow-lg">
+                        <div class="card-header  text-white text-center py-4">
+                            <i class="fas fa-car-side fa-3x mb-2"></i>
+                            <h4 class="card-title mb-0">Alquiler</h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Conduce los modelos más exclusivos del mercado sin compromisos. Ofrecemos alquiler por días, semanas o eventos especiales, con asistencia personalizada y vehículos en perfectas condiciones.</p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Flota de marcas premium</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Entrega en domicilio o aeropuerto</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Seguros incluidos</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Atención 24 horas</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-grid">
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#webDevModal">
+                                    Ver Detalles <i class="fas fa-arrow-right ms-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 border-0 shadow-lg">
+                        <div class="card-header  text-white text-center py-4">
+                            <i class="fas fa-flag-checkered fa-3x mb-2"></i>
+                            <h4 class="card-title mb-0">Pruebas en Circuito</h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Vive la adrenalina de conducir un superdeportivo en un circuito profesional. Nuestros eventos incluyen instrucción, seguridad y toda la emoción de la velocidad.</p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Superdeportivos Ferrari, Lamborghini, Porsche...</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Instructores Profesionales</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Experiencia segura y guiada</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Certificado de conducción</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-grid">
+                                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#mobileDevModal">
+                                    Ver Detalles <i class="fas fa-arrow-right ms-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 border-0 shadow-lg">
+                        <div class="card-header text-dark text-center py-4">
+                            <i class="fas fa-key fa-3x mb-2"></i>
+                            <h4 class="card-title mb-0">Vehiculos en Venta</h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Encuentra el coche de tus sueños entre nuestra selección de vehículos de lujo nuevos y seminuevos. Ofrecemos asesoramiento completo y financiación a medida.</p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Marcas exclusivas</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Vehículos revisados y garantizados</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Financiación personalizada</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Gestión integral de documentación</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer ">
+                            <div class="d-grid">
+                                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#cloudModal">
+                                    Ver Detalles <i class="fas fa-arrow-right ms-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+
+        <section class="mb-5">
+            <h2 class="text-center mb-5">Algunos de Nuestros Vehículos Disponibles</h2>
+            <div class="row g-4">
+            <!-- Muestra coches con imágenes, descripción, precio y botones de acción. -->
+            <!-- Vehículo 1 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 border-0 shadow-lg">
+                <img src="img/revuelto.png" class="card-img-top" alt="">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Lamborghini Revuelto</h5>
+                    <p class="card-text">Motor V12 híbrido de 1.015 CV. El equilibrio perfecto entre potencia bruta, innovación y el lujo artesanal característico de Lamborghini.</p>
+                    <p class="fw-bold text-dorado mb-2">Desde <span class="text-dorado">€600.000</span></p>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <div class="d-grid">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-car me-2"></i>Ver Detalles
+                    </button>
+                    </div>
+                </div>
+                </div>
+            </div>
+        
+            <!-- Vehículo 2 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 border-0 shadow-lg">
+                <img src="img/gt3.png" class="card-img-top" alt="">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Porsche 911 GT3 RS</h5>
+                    <p class="card-text">Potente motor  de 525 CV, tracción trasera y aerodinámica extrema para una experiencia de conducción precisa y deportiva.</p>
+                    <p class="fw-bold text-dorado mb-2">Desde <span class="text-dorado">€290.000</span></p>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <div class="d-grid">
+                    <button class="btn btn-success">
+                        <i class="fas fa-flag-checkered me-2"></i>Reservar Prueba
+                    </button>
+                    </div>
+                </div>
+                </div>
+            </div>
+        
+            <!-- Vehículo 3 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 border-0 shadow-lg">
+                <img src="img/sf90.png" class="card-img-top" alt="">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Ferrari SF90 Stradale</h5>
+                    <p class="card-text">Superdeportivo híbrido con 1.000 CV combinados. Una obra maestra de tecnología y diseño que redefine el concepto de rendimiento.</p>
+                    <p class="fw-bold text-dorado mb-2">Desde <span class="text-dorado">€450.000</span></p>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <div class="d-grid">
+                    <button class="btn btn-warning">
+                        <i class="fas fa-key me-2"></i>Solicitar Compra
+                    </button>
+                    </div>
+                </div>
+                </div>
+            </div>
+        
+            </div>
+        </section>
+
+        <!-- Process Timeline 
+        Explica las 4 fases del servicio mediante íconos y textos. 
+        -->
+        <section class="mb-5">
+            <h2 class="text-center mb-5">Nuestro Proceso de Trabajo</h2>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="text-center">
+                        <div class="text-white rounded-circle d-inline-flex align-items-center justify-content-center"
+                            style="width: 80px; height: 80px;">
+                            <h3 class="mb-0">1</h3>
+                        </div>
+                        <h5 class="mt-3">Selección</h5>
+                        <p class="text-muted">Elige el vehículo o servicio ideal para ti.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="text-center">
+                        <div class="text-white rounded-circle d-inline-flex align-items-center justify-content-center"
+                            style="width: 80px; height: 80px;">
+                            <h3 class="mb-0">2</h3>
+                        </div>
+                        <h5 class="mt-3">Reserva</h5>
+                        <p class="text-muted">Nuestro equipo confirma disponibilidad y condiciones.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="text-center">
+                        <div class="text-dark rounded-circle d-inline-flex align-items-center justify-content-center"
+                            style="width: 80px; height: 80px;">
+                            <h3 class="mb-0">3</h3>
+                        </div>
+                        <h5 class="mt-3">Entrega</h5>
+                        <p class="text-muted">Recibe tu coche en el punto acordado, impecable y listo.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="text-center">
+                        <div class="text-white rounded-circle d-inline-flex align-items-center justify-content-center"
+                            style="width: 80px; height: 80px;">
+                            <h3 class="mb-0">4</h3>
+                        </div>
+                        <h5 class="mt-3">Experiencia</h5>
+                        <p class="text-muted">Disfruta del lujo y confort, con soporte premium.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Carousel 
+        Muestra opiniones de clientes dentro de un carrusel animado. 
+        -->
+        <section class="mb-5">
+            <h2 class="text-center mb-5">Lo que Dicen Nuestros Clientes</h2>
+            <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="card border-0 shadow-lg">
+                            <div class="card-body text-center py-5">
+                                <i class="fas fa-quote-left fa-3x text-primary mb-3"></i>
+                                <p class="lead">"Alquilé un Lamborghini para un evento y el servicio fue impecable. Coche perfecto, atención inmediata y una experiencia inolvidable."</p>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <div>
+                                        <h6 class="mb-0">María González</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="card border-0 shadow-lg">
+                            <div class="card-body text-center py-5">
+                                <i class="fas fa-quote-left fa-3x text-success mb-3"></i>
+                                <p class="lead">"Compré mi Mercedes AMG con ellos. Gestión rápida, transparente y con un trato de primera."</p>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <div>
+                                        <h6 class="mb-0">Carlos Ruiz</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Call to Action 
+        Motiva al usuario a contactar o agendar una reunión.
+        Visualmente destacado y centrado. 
+        -->
+        <section class="text-white rounded p-5 text-center">
+            <h2>¿Listo para conducir tu próximo vehículo de lujo?</h2>
+            <p class="lead">Contáctanos hoy y descubre cómo hacer realidad tu experiencia de conducción exclusiva.</p>
+            <button class="btn btn-light btn-lg me-2" data-bs-toggle="modal" data-bs-target="#contactModal">
+                <i class="fas fa-phone me-2"></i>Contactar Ahora
+            </button>
+            <button class="btn btn-outline-light btn-lg">
+                <i class="fas fa-calendar me-2"></i>Agendar Reunión
+            </button>
+        </section>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal fade" id="contactModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header  text-white">
+                    <h5 class="modal-title"><i class="fas fa-envelope me-2"></i>Contactar con Luxury Motion</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nombre</label>
+                                <input type="text" class="form-control" placeholder="Tu nombre">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" placeholder="tu@email.com">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Teléfono</label>
+                                <input type="tel" class="form-control" placeholder="+34 123 456 789">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Servicio de Interés</label>
+                                <select class="form-select">
+                                    <option selected>Selecciona un servicio</option>
+                                    <option value="alquiler">Alquiler de Vehículos</option>
+                                    <option value="compra">Compra de Vehículos</option>
+                                    <option value="prueba">Pruebas en Circuito</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Presupuesto Estimado</label>
+                            <div class="btn-group w-100" role="group">
+                                <input type="radio" class="btn-check" name="budget" id="budget1">
+                                <label class="btn btn-outline-primary" for="budget1">
+                                    < €5K</label>
+                                        <input type="radio" class="btn-check" name="budget" id="budget2">
+                                        <label class="btn btn-outline-primary" for="budget2">€5K - €15K</label>
+                                        <input type="radio" class="btn-check" name="budget" id="budget3">
+                                        <label class="btn btn-outline-primary" for="budget3">€15K - €50K</label>
+                                        <input type="radio" class="btn-check" name="budget" id="budget4">
+                                        <label class="btn btn-outline-primary" for="budget4">>€50K</label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mensaje</label>
+                            <textarea class="form-control" rows="4"
+                                placeholder=""></textarea>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="terms">
+                            <label class="form-check-label" for="terms">
+                                Acepto los términos y condiciones y la política de privacidad
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="enviarMensajeBtn">
+                        <i class="fas fa-paper-plane me-2"></i>Enviar Mensaje
+                    </button>
+                    <div id="mensajeExito" class="alert alert-success mt-3 d-none">
+                        <strong>Perfecto!</strong> Vamos a revisar tu consulta y te responderemos con la mayor brevedad posible.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Detail Modals -->
+    <!-- Web Development Modal -->
+    <div class="modal fade" id="webDevModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header text-white">
+                    <h5 class="modal-title"><i class="fas fa-car-side fa-3x mb-2"></i>Alquiler</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h6>Incluye:</h6>
+                            <ul class="list-unstyled mb-4">
+                            <li><i class="fas fa-check text-success me-2"></i>Flota de vehículos de lujo en perfecto estado</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Entrega personalizada en domicilio o aeropuerto</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Seguro a todo riesgo y asistencia 24 horas</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Opciones de alquiler por día, semana o evento</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Servicio de chófer disponible bajo reserva</li>
+                            </ul>
+                            <p>Disfruta la experiencia de conducir los modelos más exclusivos del mercado: Ferrari, Lamborghini, Porsche, Rolls-Royce y muchos más.
+                                Nos encargamos de cada detalle para ofrecerte una experiencia cómoda, segura y absolutamente inolvidable.</p>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3 rounded">
+                                <h6>Tarifas desde:</h6>
+                                <h4 class="text-primary">€1.200</h4>
+                                <p class="small text-muted">Incluye kilometraje limitado y seguro premium</p>
+                                <hr>
+                                <h6>Duración flexible:</h6>
+                                <p>De 1 día a 1 mes</p>
+                                <hr>
+                                <h6 class="text-dorado">Modelos disponibles:</h6>
+                                <p class="small">Lamborghini Huracán, Ferrari Purosangue, Porsche 911, Bentley Continental GT</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary">Solicitar Reserva</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Development Modal -->
+    <div class="modal fade" id="mobileDevModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header  text-white">
+                    <h5 class="modal-title"><i class="fas fa-flag-checkered fa-3x mb-2"></i>Pruebas en Circuito</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h6>Vive la emoción al volante</h6>
+                            <div class="mb-3">
+                                <span class="badge  me-2">React Native</span>
+                                <span class="badge  me-2">Flutter</span>
+                                <span class="badge  me-2">Swift</span>
+                                <span class="badge  me-2">Kotlin</span>
+                                <span class="badge  me-2">Xamarin</span>
+                            </div>
+                            <p>Siente la potencia y precisión de los superdeportivos más icónicos en un entorno seguro y controlado.  
+                                Nuestras pruebas en circuito están diseñadas para ofrecerte una experiencia de conducción inolvidable, combinando adrenalina, técnica y exclusividad.</p>
+                             <h6 class="text-dorado mt-4">Incluye:</h6>
+                            <ul class="list-unstyled mb-4">
+                            <li><i class="fas fa-check text-success me-2"></i>Briefing técnico con pilotos profesionales</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Vueltas de reconocimiento y conducción guiada</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Seguro incluido y equipo de protección</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Grabación en vídeo HD opcional</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Certificado de participación exclusivo</li>
+                            </ul>
+                            <p>
+                            Contamos con circuitos en localizaciones premium y un equipo de instructores certificados que garantizan tu seguridad y disfrute en cada curva.
+                            </p>
+                        </div>
+                        <div class="col-md-4">
+                            <div class=" p-3 rounded">
+                                <h6>Tarifas desde:</h6>
+                                <h4 class="text-success">€850</h4>
+                                <p class="small text-muted">Incluye 3 vueltas con instructor y seguro completo</p>
+                                <hr>
+                                <h6 class="text-dorado">Vehículos disponibles:</h6>
+                                <p class="small">
+                                    Ferrari 488 GTB, Lamborghini Huracán, Porsche GT3 RS, McLaren 720S
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success">Reservar Experiencia</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add other modals for remaining services... -->
+    <!-- Cloud Computing Modal -->
+    <div class="modal fade" id="cloudModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header  text-white">
+                    <h5 class="modal-title"><i class="fas fa-key fa-3x mb-2"></i>Vehículos en Venta</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h6>Exclusividad sobre ruedas</h6>
+                            <p>En <strong>Luxury Motion</strong> ponemos a tu alcance una cuidada selección de vehículos de lujo nuevos y seminuevos, revisados y certificados para garantizar el máximo nivel de calidad, rendimiento y elegancia.</p>
+                            <h6 class="text-dorado mt-4">Nuestros servicios incluyen:</h6>
+                            <ul class="list-unstyled mb-4">
+                            <li><i class="fas fa-check text-success me-2"></i>Asesoramiento personalizado en la compra</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Vehículos con historial verificado y mantenimiento al día</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Opciones de financiación y compra internacional</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Gestión de matriculación y seguros</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Posibilidad de prueba antes de la compra</li>
+                            </ul>
+                             <p>
+                            Cada automóvil que ofrecemos representa lo mejor del diseño, la ingeniería y la potencia. Desde superdeportivos italianos hasta elegantes sedanes británicos, te ayudamos a encontrar el vehículo que mejor se adapte a tu estilo de vida.
+                            </p>
+                        </div>
+                        <div class="col-md-4">
+                            <div class=" p-3 rounded">
+                                <h6>Modelos destacados:</h6>
+                                <p class="small">
+                                    Ferrari Roma<br>
+                                    Aston Martin DB11<br>
+                                    Bentley Continental GT<br>
+                                    Porsche Taycan Turbo S<br>
+                                    Range Rover SV Autobiography
+                                </p>
+                                <hr>
+                                <h6 class="text-dorado">Precios desde:</h6>
+                                <h4 class="text-dorado">€95.000</h4>
+                                <p class="small text-muted">Vehículos certificados con garantía premium</p>
+                                <hr>
+                                <h6 class="text-dorado">Entrega:</h6>
+                                <p>Inmediata o bajo pedido personalizado</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success">Solicitar Presupuesto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Security Modal -->
+    <div class="modal fade" id="securityModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header  text-white">
+                    <h5 class="modal-title"><i class="fas fa-shield-alt me-2"></i>Ciberseguridad</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Protegemos tu negocio con soluciones de seguridad avanzadas y auditorías completas.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-info">Solicitar Presupuesto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Modal -->
+    <div class="modal fade" id="aiModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header  text-white">
+                    <h5 class="modal-title"><i class="fas fa-robot me-2"></i>IA & Machine Learning</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Automatizamos procesos y extraemos insights valiosos de tus datos con inteligencia artificial.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-dark">Solicitar Presupuesto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Consulting Modal -->
+    <div class="modal fade" id="consultingModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header  text-white">
+                    <h5 class="modal-title"><i class="fas fa-chart-line me-2"></i>Consultoría IT</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Optimizamos tu infraestructura tecnológica y te ayudamos a tomar las mejores decisiones
+                        estratégicas.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-danger">Solicitar Presupuesto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class=" text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="d-flex align-items-center"><img src="img/logo.png" alt="" height="40" class="me-2">Luxury Motion</h5>
+                    <p class="text-muted">Alquiler/Venta de Vehículos de Lujo</p>
+                </div>
+                <div class="col-md-3">
+                    <h6>Enlaces</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-light text-decoration-none">Inicio</a></li>
+                        <li><a href="productos.html" class="text-light text-decoration-none">Servicios</a></li>
+                        <li><a href="quienesSomos.html" class="text-light text-decoration-none">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6>Síguenos</h6>
+                    <a href="https://www.facebook.com/?locale=es_ES%2F" class="text-light me-2"><i class="fab fa-facebook fa-lg"></i></a>
+                    <a href="https://x.com/" class="text-light me-2"><i class="fab fa-twitter fa-lg"></i></a>
+                    <a href="https://es.linkedin.com/" class="text-light me-2"><i class="fab fa-linkedin fa-lg"></i></a>
+                </div>
+            </div>
+            <hr class="my-3">
+            <div class="text-center">
+                <small>&copy; 2025 Luxury Motion. Todos los derechos reservados.</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById("enviarMensajeBtn").addEventListener("click", function() {
+          const mensaje = document.getElementById("mensajeExito");
+          mensaje.classList.remove("d-none");
+        });
+        </script>
+    <button id="themeToggle" class="btn btn-theme-toggle" title="Cambiar tema">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const root = document.documentElement;
+      
+        // Revisar si hay preferencia guardada
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+          root.setAttribute('data-theme', savedTheme);
+          themeToggle.innerHTML = savedTheme === 'light' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        }
+      
+        themeToggle.addEventListener('click', () => {
+          const currentTheme = root.getAttribute('data-theme');
+          const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+          root.setAttribute('data-theme', newTheme);
+          localStorage.setItem('theme', newTheme);
+          themeToggle.innerHTML = newTheme === 'light' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+      </script>
+
+</body>
+</html>
