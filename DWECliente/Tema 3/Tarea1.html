@@ -1,11 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Variables, tipos de datos y conversiones</title>
 </head>
 <body>
-    <p>prueba</p>
+  <h1>Variables, tipos de datos y conversiones</h1>
+  <script>
+    
+    let numero = 10;               
+    let cadena = "Hola";     
+    let booleano = false;          
+    let nulo = null;               
+    let indefinido;               
+
+   
+    console.log("Tipo de numero:", typeof numero);         
+    console.log("Tipo de cadena:", typeof cadena);         
+    console.log("Tipo de booleano:", typeof booleano);    
+    console.log("Tipo de nulo:", typeof nulo);            
+    console.log("Tipo de indefinido:", typeof indefinido); 
+
+    // Conversión de número a cadena
+    let numeroACadena = String(numero);
+    console.log("Convertido a cadena:", numeroACadena, "-> Tipo:", typeof numeroACadena);
+    // Esperado: el número 10 se convierte a "10"
+
+    // Conversión de cadena a número
+    let cadenaANumero = Number("123");
+    console.log('Cadena "123" ->', cadenaANumero, "| Tipo:", typeof cadenaANumero);
+    // Esperado: la cadena "123" se convierte al número 123
+
+    // Conversión de valores a booleanos
+    let boolean0 = Boolean(0); 
+    // Esperado:  el valor 0 se convierta en false
+    let booleanT = Boolean("texto"); 
+    // Esperamos que la cadena "texto" se convierta en true
+    console.log("Boolean(0):", boolean0, "Tipo:" , typeof boolean0);          
+    console.log('Boolean("texto"):', booleanT , "Tipo:" , typeof booleanT); 
+
+  </script>
 </body>
 </html>
