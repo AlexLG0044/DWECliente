@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Actividad Tema 4</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+    <div class="container py-5">
+        <h1 class="mb-4">Calculadora y Bucles</h1>
+
+        <!-- Inputs -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="numero1" class="form-label">Número 1:</label>
+                <input type="number" id="numero1" class="form-control" placeholder="Introduce el primer número">
+            </div>
+            <div class="col-md-6">
+                <label for="numero2" class="form-label">Número 2:</label>
+                <input type="number" id="numero2" class="form-control" placeholder="Introduce el segundo número">
+            </div>
+        </div>
+
+        <!-- Botones de operaciones -->
+        <div class="d-flex flex-wrap gap-2 mb-3">
+            <!-- Ya hecho: botón de suma -->
+            <button class="btn btn-primary" onclick="sumar()">Sumar</button>
+            <button class="btn btn-primary" onclick="restar()">Restar</button>
+            <button class="btn btn-primary" onclick="multiplicar()">Multiplicar</button>
+            <button class="btn btn-primary" onclick="dividir()">Dividir</button>
+            <button class="btn btn-primary" onclick="Potencia()">Potencia</button>
+            <button class="btn btn-primary" onclick="modulo()">Módulo</button>
+            <button class="btn btn-primary" onclick="raiz()">Raíz Cuadrada</button>
+        </div>
+
+        <div class="d-flex flex-wrap gap-2 mb-3">
+            <button class="btn btn-dark" onclick="bucleForT()">Bucle For(Texto)</button>
+            <button class="btn btn-dark" onclick="bucleWhileT()">Bucle While(Texto)</button>
+            <button class="btn btn-dark" onclick="bucleDoWhileT()">Bucle Do-While(Texto)</button>
+        </div>
+        
+        <div class="d-flex flex-wrap gap-2 mb-3">
+            <button class="btn btn-warning" onclick="bucleForB()">Bucle For(badge)</button>
+            <button class="btn btn-warning" onclick="bucleWhileB()">Bucle While(badge)</button>
+            <button class="btn btn-warning" onclick="bucleDoWhileB()">Bucle Do-While(badge)</button>
+        </div>
+
+        <!-- Resultado -->
+        <div class="alert alert-info" id="resultado">Aquí aparecerá el resultado</div>
+    </div>
+
+    <script>
+        const resultado = document.getElementById("resultado");
+
+        function getNumero1() {
+            return Number(document.getElementById("numero1").value) || 0;
+        }
+
+        function getNumero2() {
+            return Number(document.getElementById("numero2").value) || 0;
+        }
+
+        // --- Operaciones ---
+        function sumar() {
+            let n1 = getNumero1();
+            let n2 = getNumero2();
+            let res = n1 + n2;
+            resultado.innerHTML = `<strong>Resultado de la suma:</strong> ${res}`;
+        }
+
+        function restar() {
+            let n1 = getNumero1();
+            let n2 = getNumero2();
+            let res = n1 - n2;
+            resultado.innerHTML = `<strong>Resultado de la resta:</strong> ${res}`;
+        }
+
+        function multiplicar() {
+            let n1 = getNumero1();
+            let n2 = getNumero2();
+            let res = n1 * n2;
+            resultado.innerHTML = `<strong>Resultado de la multiplicacion:</strong> ${res}`;
+        }
+
+        function dividir() {
+            let n1 = getNumero1();
+            let n2 = getNumero2();
+            let res = n1 / n2;
+            resultado.innerHTML = `<strong>Resultado de la division:</strong> ${res}`;
+        }
+
+        function Potencia() {
+            let n1 = getNumero1();
+            let n2 = getNumero2();
+            let res = n1 ** n2;
+            resultado.innerHTML = `<strong>Resultado de la potencia:</strong> ${res}`;
+        }
+
+        function modulo() {
+            let n1 = getNumero1();
+            let n2 = getNumero2();
+            let res = n1 % n2;
+            resultado.innerHTML = `<strong>Resultado del modulo:</strong> ${res}`;
+        }
+
+        function raiz() {
+            let n1 = getNumero1();
+            let res = Math.sqrt(n1);
+            resultado.innerHTML = `<strong>Resultado de la raiz:</strong> ${res}`;
+        }
+
+        function bucleForT(){
+            let repeticion = "<strong>Bucle for(Texto):</strong><br>";
+        for (let i = 1; i <= getNumero1(); i++) {
+            repeticion += `Repetición ${i}<br>`;
+            }
+            resultado.innerHTML = repeticion;
+        }
+
+        function bucleForB(){
+            let repeticion = "<strong>Bucle for(Badge):</strong><br>";
+        for (let i = 1; i <= getNumero1(); i++) {
+            repeticion += `<span class="badge bg-secondary m-1"># ${i}</span>`;
+            }
+            resultado.innerHTML = repeticion;
+        }
+
+        function bucleWhileT(){
+            contador = 1;
+            let repeticion = "<strong>Bucle While(Texto):</strong><br>";
+            while (contador <= getNumero1()) {
+                repeticion += `Repetición ${contador}<br>`;
+                contador++;
+            }
+            resultado.innerHTML = repeticion;
+        }
+
+        function bucleWhileB(){
+            contador = 1;
+            let repeticion = "<strong>Bucle While(Badge):</strong><br>";
+            while (contador <= getNumero1()) {
+                repeticion += `<span class="badge bg-secondary m-1"># ${contador}</span>`;
+                contador++;
+            }
+            resultado.innerHTML = repeticion;
+        }
+
+        function bucleDoWhileT(){
+            contador = 1;
+            let repeticion = "<strong>Bucle Do-While(Texto):</strong><br>";
+            do {
+                repeticion += `Repetición ${contador}<br>`;
+                contador++;
+            } while (contador <= getNumero1());
+            resultado.innerHTML = repeticion;
+        }
+
+        function bucleDoWhileB(){
+            contador = 1;
+            let repeticion = "<strong>Bucle Do-While(Badge):</strong><br>";
+            do {
+                repeticion += `<span class="badge bg-secondary m-1"># ${contador}</span>`;
+                contador++;
+            } while (contador <= getNumero1());
+            resultado.innerHTML = repeticion;
+        }
+       
+    </script>
+</body>
+
+</html>
