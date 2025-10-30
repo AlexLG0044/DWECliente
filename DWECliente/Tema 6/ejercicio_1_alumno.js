@@ -619,6 +619,13 @@ function librosRecientes() {
     mostrarLibros(recientes);
 }
 
+function eliminarLibro(indice) {
+    var eliminado = biblioteca.splice(indice, 1)[0];
+    document.getElementById("resultado-ej10").innerHTML =
+        "<div class='alert alert-warning'>Libro eliminado: " + eliminado.titulo + "</div>";
+    mostrarBiblioteca();
+}
+
 function mostrarLibros(arrayLibros) {
     // TODO: Mostrar libros en formato de tarjetas HTML
     var html = "";
@@ -630,6 +637,8 @@ function mostrarLibros(arrayLibros) {
         html = "<div class='row'>";
         for (var i = 0; i < arrayLibros.length; i++) {
             var libro = arrayLibros[i];
+            // Obtener el índice real en la biblioteca global (puede estar filtrada/ordenada)
+            var indiceI = biblioteca.indexOf(libro);
             html += "<div class='col-md-4'>" +
                 "<div class='card mb-2'>" +
                 "<div class='card-body'>" +
@@ -637,6 +646,7 @@ function mostrarLibros(arrayLibros) {
                 "<p class='card-text'><strong>Autor:</strong> " + libro.autor + "</p>" +
                 "<p class='card-text'><strong>Año:</strong> " + libro.año + "</p>" +
                 "<p class='card-text'><strong>Género:</strong> " + libro.genero + "</p>" +
+                "<button class='btn btn-danger btn-sm' onclick='eliminarLibro(" + indiceI + ");'>Eliminar</button>" +
                 "</div></div></div>";
         }
         html += "</div>";
