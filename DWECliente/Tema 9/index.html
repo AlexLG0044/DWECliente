@@ -3,59 +3,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tema 9</title>
+    <title>Tema 9 - Eventos y Cookies</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
-
-<div class="container mt-4">
-    <h3 class="mb-3">Solución práctica – Tema 9</h3>
-
-    <div class="card">
-        <div class="card-header">
-            Formulario con eventos, expresiones regulares y cookies
-        </div>
-
-        <div class="card-body">
-            <form>
-
-                <div class="mb-3">
-                    <label for="usuario" class="form-label">Nombre de usuario</label>
-                    <input type="text" class="form-control" id="usuario">
-                    <span id="pequeño" class="form-text"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label for="correo" class="form-label">Correo electrónico</label>
-                    <input type="email" class="form-control" id="correo">
-                    <span id="pequeño" class="form-text"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label for="contrasena" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="contraseña">
-                    <span id="pequeño" class="form-text"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label for="edad" class="form-label">Edad</label>
-                    <input type="number" class="form-control" id="edad">
-                    <span id="pequeño" class="form-text"></span>
-                </div>
-
-                <div class="form-check mb-3">
-                    <input class="form-check-input" type="checkbox" id="recordar">
-                    <label class="form-check-label" for="recordar">Recordarme (guardar cookie con el nombre)</label>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Enviar</button>
-                <button type="button" class="btn btn-danger ms-2">Eliminar cookie</button>
-
-            </form>
+    <div class="container mt-4">
+        <h3 class="mb-3">Solución práctica – Tema 9</h3>
+        
+        <div id="mensaje" class="alert alert-info d-none"></div>
+        
+        <div class="card">
+            <div class="card-header">
+                Formulario con eventos, expresiones regulares y cookies
+            </div>
+            <div class="card-body">
+                <form id="formulario">
+                    <div class="mb-3">
+                        <label for="usuario" class="form-label">Nombre de usuario</label>
+                        <input type="text" class="form-control" id="usuario">
+                        <div id="ayudaN" class="text-muted small d-none"></div>
+                        <div id="estadoN" class="small"></div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="correo" class="form-label">Correo electrónico</label>
+                        <input type="email" class="form-control" id="correo">
+                        <div id="ayudaC" class="text-muted small d-none"></div>
+                        <div id="estadoC" class="small"></div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="contraseña" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="contraseña">
+                        <div id="ayudaCn" class="text-muted small d-none"></div>
+                        <div id="estadoCn" class="small"></div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="edad" class="form-label">Edad</label>
+                        <input type="text" class="form-control" id="edad">
+                        <div id="ayudaE" class="text-muted small d-none"></div>
+                        <div id="estadoE" class="small"></div>
+                    </div>
+                    
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="recordar">
+                        <label class="form-check-label" for="recordar">Recordarme (guardar cookie con el nombre)</label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                    <button type="button" class="btn btn-danger ms-2" id="btnEliminar">Eliminar cookie</button>
+                </form>
+                
+                <div id="enviar" class="alert alert-success mt-3 d-none"></div>
+            </div>
         </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function getCookies() {
+            var cookies = new Map();
+            var all = document.cookie;
+            var list = all.split("; ");
+            for(var i = 0; i < list.length; i++) {
+                var cookie = list[i];
+                if (!cookie.includes("=")) continue;
+                var p = cookie.indexOf("=");
+                var name = cookie.substring(0, p);
+                var value = cookie.substring(p+1);
+                value = decodeURIComponent(value);
+                cookies.set(name, value);
+            }
+            return cookies;
+        }
+
+        function setCookie(name, value, days) {
+            var d = new Date();
+            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = name + "=" + encodeURIComponent(value) + ";" + expires + ";path=/";
+        }
+
+        function deleteCookie(name) {
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/";
+        }
+
+        var usuarioValido = false;
+        var correoValido = false;
+        var contraseñaValida = false;
+        var edadValida = false;
+
+        window.onload = function() {
+            var cookies = getCookies();
+            if (cookies.has("username")) {
+                var username = cookies.get("username");
+                document.getElementById("mensaje").textContent = "Bienvenido de nuevo, " + username;
+                document.getElementById("mensaje").classList.remove("d-none");
+                document.getElementById("usuario").value = username;
+                validarUsuario();
+            }
+        };
+
+        document.getElementById("usuario").addEventListener("focus", function() {
+            document.getElementById("ayudaN").textContent = "Introduce solo letras y espacios.";
+            document.getElementById("ayudaN").classList.remove("d-none");
+        });
+
+        document.getElementById("usuario").addEventListener("blur", function() {
+            document.getElementById("ayudaN").classList.add("d-none");
+        });
+
+        document.getElementById("usuario").addEventListener("input", function() {
+            validarUsuario();
+        });
+
+        function validarUsuario() {
+            var input = document.getElementById("usuario");
+            var estado = document.getElementById("estadoN");
+            var value = input.value.trim();
+            var regex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/;
+
+            if (value === "") {
+                input.classList.remove("is-valid", "is-invalid");
+                estado.textContent = "";
+                usuarioValido = false;
+                return;
+            }
+
+            if (regex.test(value)) {
+                input.classList.remove("is-invalid");
+                input.classList.add("is-valid");
+                estado.textContent = "✓ Correcto";
+                estado.className = "valid-feedback d-block";
+                usuarioValido = true;
+            } else {
+                input.classList.remove("is-valid");
+                input.classList.add("is-invalid");
+                estado.textContent = "✗ Formato incorrecto";
+                estado.className = "invalid-feedback d-block";
+                usuarioValido = false;
+            }
+        }
+
+        document.getElementById("correo").addEventListener("focus", function() {
+            document.getElementById("ayudaC").textContent = "Debe ser un correo electrónico válido.";
+            document.getElementById("ayudaC").classList.remove("d-none");
+        });
+
+        document.getElementById("correo").addEventListener("blur", function() {
+            document.getElementById("ayudaC").classList.add("d-none");
+        });
+
+        document.getElementById("correo").addEventListener("input", function() {
+            validarCorreo();
+        });
+
+        function validarCorreo() {
+            var input = document.getElementById("correo");
+            var estado = document.getElementById("estadoC");
+            var value = input.value.trim();
+            var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (value === "") {
+                input.classList.remove("is-valid", "is-invalid");
+                estado.textContent = "";
+                correoValido = false;
+                return;
+            }
+
+            if (regex.test(value)) {
+                input.classList.remove("is-invalid");
+                input.classList.add("is-valid");
+                estado.textContent = "✓ Correcto";
+                estado.className = "valid-feedback d-block";
+                correoValido = true;
+            } else {
+                input.classList.remove("is-valid");
+                input.classList.add("is-invalid");
+                estado.textContent = "✗ Formato incorrecto";
+                estado.className = "invalid-feedback d-block";
+                correoValido = false;
+            }
+        }
+
+        document.getElementById("contraseña").addEventListener("focus", function() {
+            document.getElementById("ayudaCn").textContent = "Mín. 8 caracteres, 1 mayúscula, 1 número y 1 símbolo.";
+            document.getElementById("ayudaCn").classList.remove("d-none");
+        });
+
+        document.getElementById("contraseña").addEventListener("blur", function() {
+            document.getElementById("ayudaCn").classList.add("d-none");
+        });
+
+        document.getElementById("contraseña").addEventListener("input", function() {
+            validarcontraseña();
+        });
+
+        function validarcontraseña() {
+            var input = document.getElementById("contraseña");
+            var estado = document.getElementById("estadoCn");
+            var value = input.value.trim();
+            var regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
+
+            if (value === "") {
+                input.classList.remove("is-valid", "is-invalid");
+                estado.textContent = "";
+                contraseñaValida = false;
+                return;
+            }
+
+            if (regex.test(value)) {
+                input.classList.remove("is-invalid");
+                input.classList.add("is-valid");
+                estado.textContent = "✓ Correcto";
+                estado.className = "valid-feedback d-block";
+                contraseñaValida = true;
+            } else {
+                input.classList.remove("is-valid");
+                input.classList.add("is-invalid");
+                estado.textContent = "✗ Formato incorrecto";
+                estado.className = "invalid-feedback d-block";
+                contraseñaValida = false;
+            }
+        }
+
+        document.getElementById("edad").addEventListener("focus", function() {
+            document.getElementById("ayudaE").textContent = "Introduce solo números.";
+            document.getElementById("ayudaE").classList.remove("d-none");
+        });
+
+        document.getElementById("edad").addEventListener("blur", function() {
+            document.getElementById("ayudaE").classList.add("d-none");
+        });
+
+        document.getElementById("edad").addEventListener("input", function() {
+            validarEdad();
+        });
+
+        function validarEdad() {
+            var input = document.getElementById("edad");
+            var estado = document.getElementById("estadoE");
+            var value = input.value.trim();
+            var regex = /^\d+$/;
+
+            if (value === "") {
+                input.classList.remove("is-valid", "is-invalid");
+                estado.textContent = "";
+                edadValida = false;
+                return;
+            }
+
+            if (regex.test(value)) {
+                input.classList.remove("is-invalid");
+                input.classList.add("is-valid");
+                estado.textContent = "✓ Correcto";
+                estado.className = "valid-feedback d-block";
+                edadValida = true;
+            } else {
+                input.classList.remove("is-valid");
+                input.classList.add("is-invalid");
+                estado.textContent = "✗ Formato incorrecto";
+                estado.className = "invalid-feedback d-block";
+                edadValida = false;
+            }
+        }
+
+        document.getElementById("formulario").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            validarUsuario();
+            validarCorreo();
+            validarcontraseña();
+            validarEdad();
+
+            if (!usuarioValido || !correoValido || !contraseñaValida || !edadValida) {
+                alert("Por favor, corrige los errores en el formulario antes de enviar.");
+                return;
+            }
+
+            var username = document.getElementById("usuario").value.trim();
+            var recordar = document.getElementById("recordar").checked;
+
+            if (recordar) {
+                setCookie("username", username, 7);
+            }
+
+            document.getElementById("enviar").textContent = "Formulario enviado correctamente";
+            document.getElementById("enviar").classList.remove("d-none");
+        });
+
+        document.getElementById("btnEliminar").addEventListener("click", function() {
+            deleteCookie("username");
+            document.getElementById("mensaje").classList.add("d-none");
+            alert("Cookie eliminada correctamente");
+        });
+    </script>
 </body>
 </html>
