@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEMA 10</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        .login-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+        .login-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 400;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .form-label {
+            color: #555;
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+        .form-control {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 12px;
+            font-size: 16px;
+        }
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+        }
+        .btn-login {
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 400;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.2s;
+        }
+        .btn-login:hover {
+            background-color: #0b5ed7;
+        }
+        .btn-login:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        .credentials-info {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        .credentials-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .credentials-text {
+            color: #666;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        .credentials-value {
+            color: #d63384;
+            font-family: monospace;
+        }
+        .loading-container {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .alert-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1 class="login-title">Login</h1>
+        
+        <div id="alertas" class="alert-container"></div>
+        
+        <form id="formulario">
+            <div class="mb-3">
+                <label for="email" class="form-label">Correo electrónico</label>
+                <input type="email" class="form-control" id="email" value="">
+            </div>
+            
+            <div class="mb-3">
+                <label for="contraseña" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="contraseña" value="">
+            </div>
+            
+            <button type="submit" class="btn btn-login" id="boton">Iniciar sesión</button>
+        </form>
+
+        <div id="cargando" class="loading-container">
+            <div class="spinner-border text-primary" role="status"></div>
+        </div>
+        
+        <div class="credentials-info">
+            <p class="credentials-title">Credenciales válidas de prueba:</p>
+            <p class="credentials-text">Email: <span class="credentials-value">test@medac.es</span></p>
+            <p class="credentials-text">Password: <span class="credentials-value">1234</span></p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function loginServidor(email, contraseña) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    const emailCorrecto = "test@medac.es";
+                    const contraseñaCorrecta = "1234";
+                    
+                    if (email === emailCorrecto && contraseña === contraseñaCorrecta) {
+                        resolve("Bienvenido.");
+                    } else {
+                        reject("Credenciales incorrectas.");
+                    }
+                }, 1500);
+            });
+        }
+
+        function mostrarAlerta(mensaje, tipo) {
+            const alertas = document.getElementById('alertas');
+            if (tipo === 'correcto') {
+                alertas.innerHTML = '<div class="alert alert-success">Bienvenido</div>';
+            } else {
+                alertas.innerHTML = '<div class="alert alert-danger">Error en las credenciales</div>';
+            }
+        }
+
+        document.getElementById('formulario').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const contraseña = document.getElementById('contraseña').value;
+
+            if (email === '' || contraseña === '') {
+                alert('Error: Todos los campos son obligatorios');
+                return;
+            }
+            
+            const cargando = document.getElementById('cargando');
+            cargando.style.display = 'block';
+
+            loginServidor(email, contraseña)
+                .then(mensaje => {
+                    mostrarAlerta(mensaje, "correcto");
+                })
+                .catch(error => {
+                    mostrarAlerta(error, "danger");
+                })
+                .finally(() => {
+                    cargando.style.display = 'none';
+                });
+        });
+    </script>
+</body>
+</html>
