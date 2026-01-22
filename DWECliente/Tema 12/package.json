@@ -1,0 +1,20 @@
+{
+  "name": "tema12",
+  "version": "1.0.0",
+  "description": "Práctica de introducción a TypeScript",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "serve": "npx http-server -p 8080"
+  },
+  "keywords": [
+    "typescript",
+    "practica",
+    "ejercicios"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
