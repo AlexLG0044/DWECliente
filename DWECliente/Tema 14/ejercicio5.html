@@ -303,13 +303,12 @@
     <button class="theme-toggle" onclick="toggleTheme()" title="Alternar modo claro/oscuro">🌙</button>
 
     <script>
-        // Array para almacenar las tareas
+      
         let tasks = [];
 
-        // Cargar tareas al iniciar
+        
         window.addEventListener('DOMContentLoaded', loadTasks);
 
-        // Escuchar cambios en localStorage desde otras pestañas
         window.addEventListener('storage', function(event) {
             if (event.key === 'tasks') {
                 console.log('Cambio detectado en otra pestaña');
@@ -327,7 +326,7 @@
                 return;
             }
             
-            // Crear objeto de tarea
+          
             const task = {
                 id: Date.now(),
                 text: taskText,
@@ -335,22 +334,22 @@
                 createdAt: new Date().toISOString()
             };
             
-            // Añadir a la lista
+          
             tasks.push(task);
             
-            // Guardar en localStorage
+         
             saveTasks();
             
-            // Limpiar input
+            
             taskInput.value = '';
             taskInput.focus();
             
-            // Actualizar vista
+          
             renderTasks();
         }
 
         function toggleTask(id) {
-            // Encontrar la tarea y cambiar su estado
+           
             const task = tasks.find(t => t.id === id);
             if (task) {
                 task.completed = !task.completed;
@@ -361,7 +360,7 @@
 
         function deleteTask(id) {
             if (confirm('¿Estás seguro de que deseas eliminar esta tarea?')) {
-                // Filtrar la tarea a eliminar
+                
                 tasks = tasks.filter(t => t.id !== id);
                 saveTasks();
                 renderTasks();
@@ -369,16 +368,16 @@
         }
 
         function saveTasks() {
-            // Convertir el array a JSON y guardar en localStorage
+           
             localStorage.setItem('tasks', JSON.stringify(tasks));
         }
 
         function loadTasks() {
-            // Obtener tareas de localStorage
+           
             const storedTasks = localStorage.getItem('tasks');
             
             if (storedTasks) {
-                // Parsear el JSON
+                
                 tasks = JSON.parse(storedTasks);
             } else {
                 tasks = [];
@@ -391,7 +390,7 @@
         function renderTasks() {
             const container = document.getElementById('tasksContainer');
             
-            // Si no hay tareas, mostrar mensaje
+           
             if (tasks.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
@@ -403,7 +402,7 @@
                 return;
             }
             
-            // Generar HTML para cada tarea
+            
             container.innerHTML = tasks.map(task => {
                 const date = new Date(task.createdAt);
                 const formattedDate = date.toLocaleDateString('es-ES', {
@@ -483,7 +482,7 @@
             }
         }
 
-        // Cargar tema guardado al iniciar
+       
         (function() {
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'light') {

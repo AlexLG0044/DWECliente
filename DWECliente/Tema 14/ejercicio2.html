@@ -137,28 +137,27 @@
     <button class="theme-toggle" onclick="toggleTheme()" title="Alternar modo claro/oscuro">🌙</button>
 
     <script>
-        // Incrementar el contador al cargar la página
+       
         window.addEventListener('DOMContentLoaded', incrementVisitCount);
 
         function incrementVisitCount() {
-            // Obtener el contador actual de localStorage
             let visitCount = localStorage.getItem('visitCount');
             
-            // Si no existe, inicializar a 0
+            
             if (visitCount === null) {
                 visitCount = 0;
             } else {
-                // Convertir a número
+               
                 visitCount = Number(visitCount);
             }
             
-            // Incrementar el contador
+           
             visitCount++;
             
-            // Guardar el nuevo valor en localStorage
+           
             localStorage.setItem('visitCount', visitCount.toString());
             
-            // Mostrar el contador en pantalla
+           
             displayVisitCount(visitCount);
         }
 
@@ -166,7 +165,6 @@
             const counterElement = document.getElementById('visitCount');
             counterElement.textContent = count;
             
-            // Animación simple
             counterElement.style.transform = 'scale(1.2)';
             setTimeout(() => {
                 counterElement.style.transform = 'scale(1)';
@@ -175,13 +173,12 @@
 
         function resetCounter() {
             if (confirm('¿Estás seguro de que deseas reiniciar el contador?')) {
-                // Eliminar el contador de localStorage
-                localStorage.removeItem('visitCount');
                 
-                // Reiniciar a 1 (ya que estamos en la página)
+                localStorage.removeItem('visitCount');
+           
                 localStorage.setItem('visitCount', '1');
                 
-                // Actualizar la pantalla
+              
                 displayVisitCount(1);
                 
                 alert('Contador reiniciado correctamente');
@@ -209,7 +206,7 @@
             }
         }
 
-        // Cargar tema guardado al iniciar
+   
         window.addEventListener('DOMContentLoaded', function() {
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'light') {

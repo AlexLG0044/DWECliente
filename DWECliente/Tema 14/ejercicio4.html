@@ -299,7 +299,7 @@
     <button class="theme-toggle" onclick="toggleTheme()" title="Alternar modo claro/oscuro">🌙</button>
 
     <script>
-        // Cargar datos al iniciar la página
+        
         window.addEventListener('DOMContentLoaded', loadStorageData);
 
         function saveToLocalStorage() {
@@ -310,10 +310,10 @@
                 return;
             }
             
-            // Guardar en localStorage
+          
             localStorage.setItem('comparisonData', data);
             
-            // Actualizar visualización
+      
             displayLocalStorage();
             
             alert('Dato guardado en localStorage\n\nEste dato persistirá incluso después de cerrar el navegador.');
@@ -327,10 +327,10 @@
                 return;
             }
             
-            // Guardar en sessionStorage
+         
             sessionStorage.setItem('comparisonData', data);
             
-            // Actualizar visualización
+          
             displaySessionStorage();
             
             alert('Dato guardado en sessionStorage\n\nEste dato desaparecerá al cerrar la pestaña.');
@@ -388,7 +388,7 @@
             }
         }
 
-        // Cargar tema guardado al iniciar
+      
         (function() {
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'light') {

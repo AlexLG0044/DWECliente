@@ -200,34 +200,33 @@
     <button class="theme-toggle" onclick="toggleTheme()" title="Alternar modo claro/oscuro">🌙</button>
 
     <script>
-        // Cargar datos al iniciar la página
+       
         window.addEventListener('DOMContentLoaded', loadData);
 
         function saveData() {
             const studentName = document.getElementById('studentName').value;
             const courseName = document.getElementById('courseName').value;
-            
-            // Guardar en sessionStorage
+           
             sessionStorage.setItem('studentName', studentName);
             sessionStorage.setItem('courseName', courseName);
             
-            // Mostrar los datos guardados
+            
             displayData(studentName, courseName);
             
             alert('Datos guardados en sessionStorage\n\nRecarga la página para ver que se mantienen.\nCierra la pestaña y ábrela de nuevo para ver que desaparecen.');
         }
 
         function loadData() {
-            // Obtener datos de sessionStorage
+            
             const studentName = sessionStorage.getItem('studentName');
             const courseName = sessionStorage.getItem('courseName');
             
             if (studentName && courseName) {
-                // Rellenar el formulario
+                
                 document.getElementById('studentName').value = studentName;
                 document.getElementById('courseName').value = courseName;
                 
-                // Mostrar los datos
+             
                 displayData(studentName, courseName);
             }
         }
@@ -266,7 +265,7 @@
             }
         }
 
-        // Cargar tema guardado al iniciar
+     
         window.addEventListener('DOMContentLoaded', function() {
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'light') {
