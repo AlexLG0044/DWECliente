@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 2 - Contador de Visitas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.3s ease;
+        }
+        body.light-mode {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+        }
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #FFD700, #FFC700);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.5);
+        }
+        body.light-mode .theme-toggle {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+        }
+        .container {
+            background-color: #1a1a1a;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+        h1 {
+            color: #FFD700;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+        }
+        .counter-display {
+            background: linear-gradient(135deg, #FFD700, #FFC700);
+            color: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+        }
+        .counter-number {
+            font-size: 72px;
+            font-weight: bold;
+            margin: 15px 0;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        .counter-label {
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-reset {
+            background: linear-gradient(135deg, #374151, #4b5563);
+            color: #FFD700;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .btn-reset:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
+            background: linear-gradient(135deg, #4b5563, #5a6573);
+        }
+        .container.light-mode {
+            background-color: #ffffff;
+            border-color: rgba(79, 70, 229, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        h1.light-mode {
+            color: #4f46e5;
+            text-shadow: none;
+        }
+        .counter-number.light-mode {
+            color: #4f46e5;
+        }
+        .btn-reset.light-mode {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            color: white;
+        }
+        .btn-reset.light-mode:hover {
+            background: linear-gradient(135deg, #6366f1, #7c3aed);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Contador de Visitas</h1>
+        
+        <div class="counter-display">
+            <div class="counter-label">Número de visitas</div>
+            <div class="counter-number" id="visitCount">0</div>
+        </div>
+        
+        <button class="btn-reset" onclick="resetCounter()">
+            Reiniciar Contador
+        </button>
+
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()" title="Alternar modo claro/oscuro">🌙</button>
+
+    <script>
+        // Incrementar el contador al cargar la página
+        window.addEventListener('DOMContentLoaded', incrementVisitCount);
+
+        function incrementVisitCount() {
+            // Obtener el contador actual de localStorage
+            let visitCount = localStorage.getItem('visitCount');
+            
+            // Si no existe, inicializar a 0
+            if (visitCount === null) {
+                visitCount = 0;
+            } else {
+                // Convertir a número
+                visitCount = Number(visitCount);
+            }
+            
+            // Incrementar el contador
+            visitCount++;
+            
+            // Guardar el nuevo valor en localStorage
+            localStorage.setItem('visitCount', visitCount.toString());
+            
+            // Mostrar el contador en pantalla
+            displayVisitCount(visitCount);
+        }
+
+        function displayVisitCount(count) {
+            const counterElement = document.getElementById('visitCount');
+            counterElement.textContent = count;
+            
+            // Animación simple
+            counterElement.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                counterElement.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        function resetCounter() {
+            if (confirm('¿Estás seguro de que deseas reiniciar el contador?')) {
+                // Eliminar el contador de localStorage
+                localStorage.removeItem('visitCount');
+                
+                // Reiniciar a 1 (ya que estamos en la página)
+                localStorage.setItem('visitCount', '1');
+                
+                // Actualizar la pantalla
+                displayVisitCount(1);
+                
+                alert('Contador reiniciado correctamente');
+            }
+        }
+
+        function toggleTheme() {
+            const isDarkMode = document.body.classList.contains('light-mode');
+            if (isDarkMode) {
+                document.body.classList.remove('light-mode');
+                document.querySelector('.container').classList.remove('light-mode');
+                document.querySelectorAll('h1').forEach(el => el.classList.remove('light-mode'));
+                document.getElementById('visitCount').classList.remove('light-mode');
+                document.querySelectorAll('.btn-reset').forEach(el => el.classList.remove('light-mode'));
+                localStorage.setItem('theme', 'dark');
+                document.querySelector('.theme-toggle').textContent = '🌙';
+            } else {
+                document.body.classList.add('light-mode');
+                document.querySelector('.container').classList.add('light-mode');
+                document.querySelectorAll('h1').forEach(el => el.classList.add('light-mode'));
+                document.getElementById('visitCount').classList.add('light-mode');
+                document.querySelectorAll('.btn-reset').forEach(el => el.classList.add('light-mode'));
+                localStorage.setItem('theme', 'light');
+                document.querySelector('.theme-toggle').textContent = '☀️';
+            }
+        }
+
+        // Cargar tema guardado al iniciar
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                document.querySelector('.container').classList.add('light-mode');
+                document.querySelectorAll('h1').forEach(el => el.classList.add('light-mode'));
+                document.getElementById('visitCount').classList.add('light-mode');
+                document.querySelectorAll('.btn-reset').forEach(el => el.classList.add('light-mode'));
+                document.querySelector('.theme-toggle').textContent = '☀️';
+            }
+            incrementVisitCount();
+        }, { once: true });
+    </script>
+</body>
+</html>

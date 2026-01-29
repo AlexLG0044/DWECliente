@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 3 - sessionStorage</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.3s ease;
+        }
+        body.light-mode {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+        }
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #FFD700, #FFC700);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.5);
+        }
+        body.light-mode .theme-toggle {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+        }
+        .container {
+            background-color: #1a1a1a;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+        h1 {
+            color: #FFD700;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #FFD700;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+            background-color: #0f0f0f;
+            color: white;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #FFD700;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-save {
+            background: linear-gradient(135deg, #FFD700, #FFC700);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+        .btn-save:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.5);
+        }
+        .saved-data {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 200, 0, 0.05));
+            border-left: 4px solid #FFD700;
+            border-radius: 8px;
+        }
+        .saved-data h3 {
+            margin-top: 0;
+            color: #FFD700;
+        }
+        .saved-data p {
+            margin: 10px 0;
+            color: #e5e7eb;
+        }
+        .saved-data strong {
+            color: #FFD700;
+        }
+        .explanation {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 200, 0, 0.05));
+            border-left: 4px solid #FFD700;
+            border-radius: 8px;
+            display: none;
+        }
+        .explanation h3 {
+            margin-top: 0;
+            color: #FFD700;
+        }
+        .explanation ul {
+            color: #e5e7eb;
+            line-height: 1.8;
+        }
+        .explanation li {
+            margin-bottom: 12px;
+        }
+        .highlight {
+            background-color: rgba(255, 215, 0, 0.3);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #FFD700;
+        }
+        .container.light-mode {
+            background-color: #ffffff;
+            border-color: rgba(79, 70, 229, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        h1.light-mode {
+            color: #4f46e5;
+            text-shadow: none;
+        }
+        label.light-mode {
+            color: #4f46e5;
+        }
+        input.light-mode {
+            background-color: #f5f5f5;
+            color: #1a1a1a;
+            border-color: rgba(79, 70, 229, 0.3);
+        }
+        input.light-mode:focus {
+            border-color: #4f46e5;
+        }
+        .btn-save.light-mode {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Almacenamiento de Sesión</h1>
+        
+        <form onsubmit="event.preventDefault(); saveData();">
+            <div class="form-group">
+                <label for="studentName">Nombre del estudiante:</label>
+                <input type="text" id="studentName" placeholder="Introduce tu nombre" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="courseName">Curso:</label>
+                <input type="text" id="courseName" placeholder="Ej: Desarrollo Web" required>
+            </div>
+            
+            <button type="submit" class="btn-save">Guardar Datos</button>
+        </form>
+        
+        <div class="saved-data" id="savedData" style="display: none;">
+            <h3>Datos Guardados (sessionStorage)</h3>
+            <p><strong>Nombre:</strong> <span id="displayName"></span></p>
+            <p><strong>Curso:</strong> <span id="displayCourse"></span></p>
+        </div>
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()" title="Alternar modo claro/oscuro">🌙</button>
+
+    <script>
+        // Cargar datos al iniciar la página
+        window.addEventListener('DOMContentLoaded', loadData);
+
+        function saveData() {
+            const studentName = document.getElementById('studentName').value;
+            const courseName = document.getElementById('courseName').value;
+            
+            // Guardar en sessionStorage
+            sessionStorage.setItem('studentName', studentName);
+            sessionStorage.setItem('courseName', courseName);
+            
+            // Mostrar los datos guardados
+            displayData(studentName, courseName);
+            
+            alert('Datos guardados en sessionStorage\n\nRecarga la página para ver que se mantienen.\nCierra la pestaña y ábrela de nuevo para ver que desaparecen.');
+        }
+
+        function loadData() {
+            // Obtener datos de sessionStorage
+            const studentName = sessionStorage.getItem('studentName');
+            const courseName = sessionStorage.getItem('courseName');
+            
+            if (studentName && courseName) {
+                // Rellenar el formulario
+                document.getElementById('studentName').value = studentName;
+                document.getElementById('courseName').value = courseName;
+                
+                // Mostrar los datos
+                displayData(studentName, courseName);
+            }
+        }
+
+        function displayData(name, course) {
+            const savedDataDiv = document.getElementById('savedData');
+            const displayName = document.getElementById('displayName');
+            const displayCourse = document.getElementById('displayCourse');
+            
+            displayName.textContent = name;
+            displayCourse.textContent = course;
+            
+            savedDataDiv.style.display = 'block';
+        }
+
+        function toggleTheme() {
+            const isDarkMode = document.body.classList.contains('light-mode');
+            if (isDarkMode) {
+                document.body.classList.remove('light-mode');
+                document.querySelector('.container').classList.remove('light-mode');
+                document.querySelectorAll('h1').forEach(el => el.classList.remove('light-mode'));
+                document.querySelectorAll('label').forEach(el => el.classList.remove('light-mode'));
+                document.querySelectorAll('input').forEach(el => el.classList.remove('light-mode'));
+                document.querySelectorAll('.btn-save').forEach(el => el.classList.remove('light-mode'));
+                localStorage.setItem('theme', 'dark');
+                document.querySelector('.theme-toggle').textContent = '🌙';
+            } else {
+                document.body.classList.add('light-mode');
+                document.querySelector('.container').classList.add('light-mode');
+                document.querySelectorAll('h1').forEach(el => el.classList.add('light-mode'));
+                document.querySelectorAll('label').forEach(el => el.classList.add('light-mode'));
+                document.querySelectorAll('input').forEach(el => el.classList.add('light-mode'));
+                document.querySelectorAll('.btn-save').forEach(el => el.classList.add('light-mode'));
+                localStorage.setItem('theme', 'light');
+                document.querySelector('.theme-toggle').textContent = '☀️';
+            }
+        }
+
+        // Cargar tema guardado al iniciar
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                document.querySelector('.container').classList.add('light-mode');
+                document.querySelectorAll('h1').forEach(el => el.classList.add('light-mode'));
+                document.querySelectorAll('label').forEach(el => el.classList.add('light-mode'));
+                document.querySelectorAll('input').forEach(el => el.classList.add('light-mode'));
+                document.querySelectorAll('.btn-save').forEach(el => el.classList.add('light-mode'));
+                document.querySelector('.theme-toggle').textContent = '☀️';
+            }
+            loadData();
+        }, { once: true });
+    </script>
+</body>
+</html>

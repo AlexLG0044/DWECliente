@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 5 - Lista de Tareas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            min-height: 100vh;
+            padding: 20px;
+            transition: background-color 0.3s ease;
+        }
+        body.light-mode {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+        }
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #FFD700, #FFC700);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.5);
+        }
+        body.light-mode .theme-toggle {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #1a1a1a;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.2);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+        h1 {
+            text-align: center;
+            color: #FFD700;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+        }
+        .subtitle {
+            text-align: center;
+            color: #d1d5db;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        .input-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        #taskInput {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            background-color: #0f0f0f;
+            color: white;
+        }
+        #taskInput:focus {
+            outline: none;
+            border-color: #FFD700;
+        }
+        .btn-add {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #FFD700, #FFC700);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-add:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.5);
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
+            border-radius: 10px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #FFD700;
+        }
+        .stat-label {
+            color: #9ca3af;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .tasks-container {
+            min-height: 200px;
+        }
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: rgba(255, 215, 0, 0.08);
+            border-radius: 8px;
+            border-left: 4px solid #FFD700;
+            transition: all 0.3s ease;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .task-item:hover {
+            background-color: rgba(255, 215, 0, 0.12);
+            transform: translateX(5px);
+        }
+        .task-checkbox {
+            width: 20px;
+            height: 20px;
+            margin-right: 15px;
+            cursor: pointer;
+            accent-color: #FFD700;
+        }
+        .task-text {
+            flex: 1;
+            font-size: 16px;
+            color: #e5e7eb;
+        }
+        .task-text.completed {
+            text-decoration: line-through;
+            color: #6b7280;
+        }
+        .task-date {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-right: 15px;
+        }
+        .btn-delete {
+            padding: 8px 15px;
+            background: linear-gradient(135deg, #374151, #4b5563);
+            color: #FFD700;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .btn-delete:hover {
+            background: linear-gradient(135deg, #4b5563, #5a6573);
+            transform: scale(1.05);
+        }
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6b7280;
+        }
+        .empty-state-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        .empty-state-text {
+            font-size: 1.2em;
+        }
+        .info-box {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 200, 0, 0.05));
+            border-left: 4px solid #FFD700;
+            border-radius: 8px;
+            display: none;
+        }
+        .info-box h3 {
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+        .info-box p {
+            color: #d1d5db;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        .sync-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #FFD700, #FFC700);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            font-weight: bold;
+        }
+        .sync-indicator.show {
+            opacity: 1;
+        }
+        .container.light-mode {
+            background-color: #ffffff;
+            border-color: rgba(79, 70, 229, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        h1.light-mode {
+            color: #4f46e5;
+            text-shadow: none;
+        }
+        #taskInput.light-mode {
+            background-color: #f5f5f5;
+            color: #1a1a1a;
+            border-color: rgba(79, 70, 229, 0.3);
+        }
+        #taskInput.light-mode:focus {
+            border-color: #4f46e5;
+        }
+        .btn-add.light-mode {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+        }
+        .task-text.light-mode {
+            color: #1a1a1a;
+        }
+    </style>
+</head>
+<body>
+    <div class="sync-indicator" id="syncIndicator">
+        Sincronizado con otras pestañas
+    </div>
+
+    <div class="container">
+        <h1>Lista de Tareas</h1>
+        <p class="subtitle">Gestiona tus tareas con localStorage</p>
+        
+        <div class="input-section">
+            <input 
+                type="text" 
+                id="taskInput" 
+                placeholder="Escribe una nueva tarea..."
+                onkeypress="if(event.key === 'Enter') addTask()"
+            >
+            <button class="btn-add" onclick="addTask()">➕ Añadir Tarea</button>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number" id="totalTasks">0</div>
+                <div class="stat-label">Total</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="pendingTasks">0</div>
+                <div class="stat-label">Pendientes</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="completedTasks">0</div>
+                <div class="stat-label">Completadas</div>
+            </div>
+        </div>
+        
+        <div class="tasks-container" id="tasksContainer">
+            <div class="empty-state">
+                <div class="empty-state-icon"></div>
+                <div class="empty-state-text">No hay tareas. Añade una para empezar!</div>
+            </div>
+        </div>
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()" title="Alternar modo claro/oscuro">🌙</button>
+
+    <script>
+        // Array para almacenar las tareas
+        let tasks = [];
+
+        // Cargar tareas al iniciar
+        window.addEventListener('DOMContentLoaded', loadTasks);
+
+        // Escuchar cambios en localStorage desde otras pestañas
+        window.addEventListener('storage', function(event) {
+            if (event.key === 'tasks') {
+                console.log('Cambio detectado en otra pestaña');
+                loadTasks();
+                showSyncIndicator();
+            }
+        });
+
+        function addTask() {
+            const taskInput = document.getElementById('taskInput');
+            const taskText = taskInput.value.trim();
+            
+            if (!taskText) {
+                alert('Por favor, escribe una tarea');
+                return;
+            }
+            
+            // Crear objeto de tarea
+            const task = {
+                id: Date.now(),
+                text: taskText,
+                completed: false,
+                createdAt: new Date().toISOString()
+            };
+            
+            // Añadir a la lista
+            tasks.push(task);
+            
+            // Guardar en localStorage
+            saveTasks();
+            
+            // Limpiar input
+            taskInput.value = '';
+            taskInput.focus();
+            
+            // Actualizar vista
+            renderTasks();
+        }
+
+        function toggleTask(id) {
+            // Encontrar la tarea y cambiar su estado
+            const task = tasks.find(t => t.id === id);
+            if (task) {
+                task.completed = !task.completed;
+                saveTasks();
+                renderTasks();
+            }
+        }
+
+        function deleteTask(id) {
+            if (confirm('¿Estás seguro de que deseas eliminar esta tarea?')) {
+                // Filtrar la tarea a eliminar
+                tasks = tasks.filter(t => t.id !== id);
+                saveTasks();
+                renderTasks();
+            }
+        }
+
+        function saveTasks() {
+            // Convertir el array a JSON y guardar en localStorage
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        function loadTasks() {
+            // Obtener tareas de localStorage
+            const storedTasks = localStorage.getItem('tasks');
+            
+            if (storedTasks) {
+                // Parsear el JSON
+                tasks = JSON.parse(storedTasks);
+            } else {
+                tasks = [];
+            }
+            
+            // Renderizar las tareas
+            renderTasks();
+        }
+
+        function renderTasks() {
+            const container = document.getElementById('tasksContainer');
+            
+            // Si no hay tareas, mostrar mensaje
+            if (tasks.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon"></div>
+                        <div class="empty-state-text">No hay tareas. Añade una para empezar!</div>
+                    </div>
+                `;
+                updateStats();
+                return;
+            }
+            
+            // Generar HTML para cada tarea
+            container.innerHTML = tasks.map(task => {
+                const date = new Date(task.createdAt);
+                const formattedDate = date.toLocaleDateString('es-ES', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                return `
+                    <div class="task-item">
+                        <input 
+                            type="checkbox" 
+                            class="task-checkbox" 
+                            ${task.completed ? 'checked' : ''}
+                            onchange="toggleTask(${task.id})"
+                        >
+                        <span class="task-text ${task.completed ? 'completed' : ''}">
+                            ${escapeHtml(task.text)}
+                        </span>
+                        <span class="task-date">${formattedDate}</span>
+                        <button class="btn-delete" onclick="deleteTask(${task.id})">
+                            🗑️ Eliminar
+                        </button>
+                    </div>
+                `;
+            }).join('');
+            
+            updateStats();
+        }
+
+        function updateStats() {
+            const total = tasks.length;
+            const completed = tasks.filter(t => t.completed).length;
+            const pending = total - completed;
+            
+            document.getElementById('totalTasks').textContent = total;
+            document.getElementById('completedTasks').textContent = completed;
+            document.getElementById('pendingTasks').textContent = pending;
+        }
+
+        function showSyncIndicator() {
+            const indicator = document.getElementById('syncIndicator');
+            indicator.classList.add('show');
+            setTimeout(() => {
+                indicator.classList.remove('show');
+            }, 2000);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function toggleTheme() {
+            const isDarkMode = document.body.classList.contains('light-mode');
+            if (isDarkMode) {
+                document.body.classList.remove('light-mode');
+                document.querySelector('.container').classList.remove('light-mode');
+                document.querySelectorAll('h1').forEach(el => el.classList.remove('light-mode'));
+                document.getElementById('taskInput').classList.remove('light-mode');
+                document.querySelectorAll('.btn-add').forEach(el => el.classList.remove('light-mode'));
+                document.querySelectorAll('.task-text').forEach(el => el.classList.remove('light-mode'));
+                localStorage.setItem('theme', 'dark');
+                document.querySelector('.theme-toggle').textContent = '🌙';
+            } else {
+                document.body.classList.add('light-mode');
+                document.querySelector('.container').classList.add('light-mode');
+                document.querySelectorAll('h1').forEach(el => el.classList.add('light-mode'));
+                document.getElementById('taskInput').classList.add('light-mode');
+                document.querySelectorAll('.btn-add').forEach(el => el.classList.add('light-mode'));
+                document.querySelectorAll('.task-text').forEach(el => el.classList.add('light-mode'));
+                localStorage.setItem('theme', 'light');
+                document.querySelector('.theme-toggle').textContent = '☀️';
+            }
+        }
+
+        // Cargar tema guardado al iniciar
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                document.querySelector('.container').classList.add('light-mode');
+                document.querySelectorAll('h1').forEach(el => el.classList.add('light-mode'));
+                document.getElementById('taskInput').classList.add('light-mode');
+                document.querySelectorAll('.btn-add').forEach(el => el.classList.add('light-mode'));
+                document.querySelectorAll('.task-text').forEach(el => el.classList.add('light-mode'));
+                document.querySelector('.theme-toggle').textContent = '☀️';
+            }
+        })();
+    </script>
+</body>
+</html>
