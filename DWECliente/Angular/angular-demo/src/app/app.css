@@ -1,0 +1,28 @@
+:host {
+  --bs-gutter-x: 0;
+  display: block;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+.nav-link {
+  transition: color 0.3s ease-in-out;
+  margin-left: 1rem;
+}
+
+.nav-link:hover {
+  color: #0d6efd !important;
+}
+
+.nav-link.active {
+  border-bottom: 3px solid #0d6efd;
+  padding-bottom: 0.5rem;
+}
+
+router-outlet {
+  display: block;
+}

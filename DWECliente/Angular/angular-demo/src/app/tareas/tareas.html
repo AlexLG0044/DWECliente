@@ -1,0 +1,60 @@
+<div class="container mt-3">
+  <h2 class="mb-4">Gestor de Tareas</h2>
+
+  <div class="alert alert-info mb-4">
+    <strong>Total de tareas:</strong> {{ contadorTareas }} |
+    <strong>Completadas:</strong> {{ contadorCompletadas }}
+  </div>
+
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Agregar nueva tarea</h5>
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Escribe una nueva tarea..."
+          [(ngModel)]="nuevaTarea"
+          (keyup.enter)="agregarTarea()">
+        <button
+          class="btn btn-primary"
+          type="button"
+          (click)="agregarTarea()">
+          Agregar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="tareas.length === 0" class="alert alert-warning">
+    No hay tareas aún. ¡Crea una nueva!
+  </div>
+
+  <div *ngIf="tareas.length > 0" class="list-group">
+    <div
+      *ngFor="let tarea of tareas"
+      class="list-group-item d-flex justify-content-between align-items-center"
+      [class.list-group-item-light]="tarea.completada">
+
+      <div class="flex-grow-1 d-flex align-items-center">
+        <input
+          type="checkbox"
+          class="form-check-input me-3"
+          [checked]="tarea.completada"
+          (change)="toggleTarea(tarea.id)">
+        <span
+          [class.text-decoration-line-through]="tarea.completada"
+          [class.text-muted]="tarea.completada">
+          {{ tarea.texto }}
+        </span>
+      </div>
+
+      <button
+        class="btn btn-danger btn-sm"
+        (click)="eliminarTarea(tarea.id)">
+        Eliminar
+      </button>
+    </div>
+  </div>
+</div>

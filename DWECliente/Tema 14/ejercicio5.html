@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ejercicio 5 - Lista de Tareas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -42,14 +43,15 @@
         body.light-mode .theme-toggle {
             background: linear-gradient(135deg, #4f46e5, #6366f1);
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: #1a1a1a;
-            padding: 40px;
-            border-radius: 15px;
+        .card {
+            background-color: #1a1a1a !important;
+            border: 2px solid rgba(255, 215, 0, 0.3) !important;
             box-shadow: 0 10px 40px rgba(255, 215, 0, 0.2);
-            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+        body.light-mode .card {
+            background-color: #ffffff !important;
+            border-color: rgba(79, 70, 229, 0.3) !important;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
         h1 {
             text-align: center;
@@ -58,38 +60,44 @@
             font-size: 2.5em;
             text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
         }
+        body.light-mode h1 {
+            color: #4f46e5;
+            text-shadow: none;
+        }
         .subtitle {
             text-align: center;
             color: #d1d5db;
             margin-bottom: 30px;
             font-size: 1.1em;
         }
-        .input-section {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
+        body.light-mode .subtitle {
+            color: #555;
         }
-        #taskInput {
-            flex: 1;
-            padding: 15px;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
+        .input-group .form-control {
             background-color: #0f0f0f;
             color: white;
+            border: 2px solid rgba(255, 215, 0, 0.3);
         }
-        #taskInput:focus {
-            outline: none;
+        .input-group .form-control:focus {
+            background-color: #0f0f0f;
+            color: white;
             border-color: #FFD700;
+            box-shadow: none;
+        }
+        body.light-mode .input-group .form-control {
+            background-color: #f5f5f5;
+            color: #1a1a1a;
+            border-color: rgba(79, 70, 229, 0.3);
+        }
+        body.light-mode .input-group .form-control:focus {
+            background-color: #f5f5f5;
+            color: #1a1a1a;
+            border-color: #4f46e5;
         }
         .btn-add {
-            padding: 15px 30px;
             background: linear-gradient(135deg, #FFD700, #FFC700);
             color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -100,6 +108,10 @@
         .btn-add:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(255, 215, 0, 0.5);
+            color: white;
+        }
+        body.light-mode .btn-add {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
         }
         .stats {
             display: flex;
@@ -109,9 +121,6 @@
             background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
             border-radius: 10px;
             border: 1px solid rgba(255, 215, 0, 0.3);
-        }
-        .stat-item {
-            text-align: center;
         }
         .stat-number {
             font-size: 2em;
@@ -123,9 +132,6 @@
             font-size: 0.9em;
             text-transform: uppercase;
             letter-spacing: 1px;
-        }
-        .tasks-container {
-            min-height: 200px;
         }
         .task-item {
             display: flex;
@@ -219,7 +225,7 @@
         .sync-indicator {
             position: fixed;
             top: 20px;
-            right: 20px;
+            left: 20px;
             padding: 12px 20px;
             background: linear-gradient(135deg, #FFD700, #FFC700);
             color: white;
@@ -233,27 +239,25 @@
         .sync-indicator.show {
             opacity: 1;
         }
-        .container.light-mode {
-            background-color: #ffffff;
-            border-color: rgba(79, 70, 229, 0.3);
+        body.light-mode .card {
+            background-color: #ffffff !important;
+            border-color: rgba(79, 70, 229, 0.3) !important;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
-        h1.light-mode {
-            color: #4f46e5;
-            text-shadow: none;
-        }
-        #taskInput.light-mode {
+        body.light-mode .input-group .form-control {
             background-color: #f5f5f5;
             color: #1a1a1a;
             border-color: rgba(79, 70, 229, 0.3);
         }
-        #taskInput.light-mode:focus {
+        body.light-mode .input-group .form-control:focus {
+            background-color: #f5f5f5;
+            color: #1a1a1a;
             border-color: #4f46e5;
         }
-        .btn-add.light-mode {
+        body.light-mode .btn-add {
             background: linear-gradient(135deg, #4f46e5, #6366f1);
         }
-        .task-text.light-mode {
+        body.light-mode .task-text {
             color: #1a1a1a;
         }
     </style>
@@ -263,47 +267,52 @@
         Sincronizado con otras pestañas
     </div>
 
-    <div class="container">
-        <h1>Lista de Tareas</h1>
-        <p class="subtitle">Gestiona tus tareas con localStorage</p>
-        
-        <div class="input-section">
-            <input 
-                type="text" 
-                id="taskInput" 
-                placeholder="Escribe una nueva tarea..."
-                onkeypress="if(event.key === 'Enter') addTask()"
-            >
-            <button class="btn-add" onclick="addTask()">➕ Añadir Tarea</button>
-        </div>
-        
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-number" id="totalTasks">0</div>
-                <div class="stat-label">Total</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" id="pendingTasks">0</div>
-                <div class="stat-label">Pendientes</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" id="completedTasks">0</div>
-                <div class="stat-label">Completadas</div>
-            </div>
-        </div>
-        
-        <div class="tasks-container" id="tasksContainer">
-            <div class="empty-state">
-                <div class="empty-state-icon"></div>
-                <div class="empty-state-text">No hay tareas. Añade una para empezar!</div>
+    <div class="container-lg">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h1 class="card-title text-center mb-2">Lista de Tareas</h1>
+                <p class="subtitle text-center mb-4">Gestiona tus tareas con localStorage</p>
+                
+                <div class="input-group mb-4">
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="taskInput" 
+                        placeholder="Escribe una nueva tarea..."
+                        onkeypress="if(event.key === 'Enter') addTask()"
+                    >
+                    <button class="btn btn-add" onclick="addTask()">➕ Añadir Tarea</button>
+                </div>
+                
+                <div class="stats mb-4">
+                    <div class="text-center">
+                        <div class="stat-number" id="totalTasks">0</div>
+                        <div class="stat-label">Total</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="stat-number" id="pendingTasks">0</div>
+                        <div class="stat-label">Pendientes</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="stat-number" id="completedTasks">0</div>
+                        <div class="stat-label">Completadas</div>
+                    </div>
+                </div>
+                
+                <div id="tasksContainer">
+                    <div class="empty-state">
+                        <div class="empty-state-icon"></div>
+                        <div class="empty-state-text">No hay tareas. Añade una para empezar!</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <button class="theme-toggle" onclick="toggleTheme()" title="Alternar modo claro/oscuro">🌙</button>
+    <button class="btn theme-toggle" onclick="toggleTheme()" title="Alternar modo claro/oscuro">🌙</button>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-      
         let tasks = [];
 
         
@@ -463,7 +472,7 @@
             const isDarkMode = document.body.classList.contains('light-mode');
             if (isDarkMode) {
                 document.body.classList.remove('light-mode');
-                document.querySelector('.container').classList.remove('light-mode');
+                document.querySelector('.card').classList.remove('light-mode');
                 document.querySelectorAll('h1').forEach(el => el.classList.remove('light-mode'));
                 document.getElementById('taskInput').classList.remove('light-mode');
                 document.querySelectorAll('.btn-add').forEach(el => el.classList.remove('light-mode'));
@@ -472,7 +481,7 @@
                 document.querySelector('.theme-toggle').textContent = '🌙';
             } else {
                 document.body.classList.add('light-mode');
-                document.querySelector('.container').classList.add('light-mode');
+                document.querySelector('.card').classList.add('light-mode');
                 document.querySelectorAll('h1').forEach(el => el.classList.add('light-mode'));
                 document.getElementById('taskInput').classList.add('light-mode');
                 document.querySelectorAll('.btn-add').forEach(el => el.classList.add('light-mode'));
@@ -487,7 +496,7 @@
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'light') {
                 document.body.classList.add('light-mode');
-                document.querySelector('.container').classList.add('light-mode');
+                document.querySelector('.card').classList.add('light-mode');
                 document.querySelectorAll('h1').forEach(el => el.classList.add('light-mode'));
                 document.getElementById('taskInput').classList.add('light-mode');
                 document.querySelectorAll('.btn-add').forEach(el => el.classList.add('light-mode'));

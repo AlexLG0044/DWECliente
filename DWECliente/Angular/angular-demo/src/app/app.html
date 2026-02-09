@@ -1,0 +1,26 @@
+<!-- Navbar de navegación -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/tareas">{{ titulo }}</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/tareas" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <i class="bi bi-list-check"></i> Gestor de Tareas
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/passwords" routerLinkActive="active">
+            <i class="bi bi-key"></i> Generador de Contraseñas
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Contenido principal -->
+<router-outlet></router-outlet>
